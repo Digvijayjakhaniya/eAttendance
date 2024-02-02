@@ -15,16 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Subject;
-import com.attendance.system.service.SubjectService;
-
-import jakarta.servlet.http.HttpSession;
+import com.attendance.system.service.impl.SubjectServiceImpl;
 
 @RestController
 @RequestMapping("subjects")
 public class SubjectController {
 
 	@Autowired
-	SubjectService subjectService;
+	private SubjectServiceImpl subjectService;
 
 	@RequestMapping
 	public ModelAndView subject() {
@@ -42,18 +40,18 @@ public class SubjectController {
 	}
 
 	@GetMapping("get/{sid}")
-	public ResponseEntity<Subject> getSubject(@PathVariable("sid") Integer sid) {
+	public ResponseEntity<Subject> getSubject(@PathVariable Integer sid) {
 		return subjectService.getSubject(sid);
 	}
 
 	@PutMapping("update/{sid}")
-	public ResponseEntity<String> updateSubject(@PathVariable("sid") Integer sid,
+	public ResponseEntity<String> updateSubject(@PathVariable Integer sid,
 			@RequestParam("updSubject") String subjectName) {
 		return subjectService.updateSubject(sid, subjectName);
 	}
 
 	@DeleteMapping("delete/{sid}")
-	public ResponseEntity<Integer> deleteSubject(@PathVariable("sid") Integer sid) {
+	public ResponseEntity<Integer> deleteSubject(@PathVariable Integer sid) {
 		return subjectService.deleteSubject(sid);
 	}
 }

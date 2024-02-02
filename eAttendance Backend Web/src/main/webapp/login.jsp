@@ -24,7 +24,8 @@
 									<div class="text-center">
 										<h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
 									</div>
-
+						
+									
 									<form class="user" action="login/auth" method="post">
 										<div class="form-group">
 											<input
@@ -32,13 +33,13 @@
 												class="form-control form-control-user" id="email"
 												name="email" aria-describedby="emailHelp"
 												placeholder="Enter Email Address..." required
-												>
+											>
 										</div>
 										<div class="form-group">
 											<input type="password" name="password" id="password"
 												class="form-control form-control-user"
 												id="exampleInputPassword" placeholder="Password" required
-												>
+											>
 										</div>
 										<div class="form-group d-flex justify-content-around">
 											<label class="form-check-label">Login Type: </label>
@@ -52,9 +53,17 @@
 												<div class="form-check form-check-inline">
 													<input class="form-check-input loginType" type="radio"
 														name="loginType" id="loginType2" value="Faculty"
-														required>
+														 required>
 													<label class="form-check-label" for="loginType2">Faculty</label>
 												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="custom-control custom-checkbox small">
+												<input type="checkbox" name="remember-me" value="true"
+													class="custom-control-input" id="customCheck" checked>
+												<label class="custom-control-label" for="customCheck">Remember
+													Me</label>
 											</div>
 										</div>
 										<div class="mt-2 mb-2">
@@ -87,7 +96,11 @@
 		</div>
 
 	</div>
+
 	<jsp:include page="components/js-imports.jsp"></jsp:include>
+
+	
+
 </body>
 
 </html>

@@ -15,16 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Batch;
-import com.attendance.system.service.BatchService;
-
-import jakarta.servlet.http.HttpSession;
+import com.attendance.system.service.impl.BatchServiceImpl;
 
 @RestController
 @RequestMapping("batch")
 public class BatchController {
 
+	
 	@Autowired
-	BatchService batchService;
+	private BatchServiceImpl batchService;
 
 	@RequestMapping
 	public ModelAndView batch() {
@@ -42,17 +41,17 @@ public class BatchController {
 	}
 	
 	@GetMapping("get/{bid}")
-	public ResponseEntity<Batch> getBatch(@PathVariable("bid") Integer bid){
+	public ResponseEntity<Batch> getBatch(@PathVariable Integer bid){
 		return batchService.getBatch(bid);
 	}
 	
 	@PutMapping("update/{bid}")
-	public ResponseEntity<String> updateBatch(@PathVariable("bid") Integer bid,@RequestParam("updBatch") String batchName){
+	public ResponseEntity<String> updateBatch(@PathVariable Integer bid,@RequestParam("updBatch") String batchName){
 		return batchService.updateBatch(bid,batchName);
 	}
 	
 	@DeleteMapping("delete/{bid}")
-	public ResponseEntity<Integer> deleteBatch(@PathVariable("bid") Integer bid){
+	public ResponseEntity<Integer> deleteBatch(@PathVariable Integer bid){
 		return batchService.deleteBatch(bid);
 	}
 

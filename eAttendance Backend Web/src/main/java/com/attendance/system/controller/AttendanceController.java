@@ -12,14 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.attendance.system.model.Attendance;
 import com.attendance.system.service.AttendanceService;
 
-import jakarta.servlet.http.HttpSession;
-
 @RestController
 @RequestMapping("attendance")
 public class AttendanceController {
 
+
 	@Autowired
-	AttendanceService attendanceService;
+	private AttendanceService attendanceService;
 
 	@RequestMapping
 	public ModelAndView attendance() {
@@ -30,25 +29,24 @@ public class AttendanceController {
 	public ResponseEntity<String> startSession(@PathVariable("course") String course_id,@PathVariable("subject") String subject_id,@PathVariable("sem") String sem_id,@PathVariable("div") String division,@PathVariable("fid") String facultyId) {
 		return attendanceService.startSession(course_id,subject_id,sem_id,division,facultyId);
 	}
-	
 	@GetMapping("session/stop/{course}/{subject}/{sem}/{div}/{fid}")
 	public ResponseEntity<String> stopSession(@PathVariable("course") String course_id,@PathVariable("subject") String subject_id,@PathVariable("sem") String sem_id,@PathVariable("div") String division,@PathVariable("fid") String facultyId) {
 		return attendanceService.stopSession(course_id,subject_id,sem_id,division,facultyId);
 	}
 
 	@PutMapping("update/{aid}/{isPresent}")
-	public ResponseEntity<String> updateAttendance(@PathVariable("aid") Integer aid,
-			@PathVariable("isPresent") Boolean isPresent) {
+	public ResponseEntity<String> updateAttendance(@PathVariable Integer aid,
+			@PathVariable Boolean isPresent) {
 		return attendanceService.updateAttendance(aid, isPresent);
 	}
 	
 	@GetMapping("get/{aid}")
-	public ResponseEntity<Attendance> getAttendance(@PathVariable("aid") Integer aid){
+	public ResponseEntity<Attendance> getAttendance(@PathVariable Integer aid){
 		return attendanceService.getAttendance(aid);
 	}
 	
 	@GetMapping("fill/{mid}/{sid}")
-	public ResponseEntity<Boolean> fillAttendance(@PathVariable("mid") Integer mid,@PathVariable("sid") Integer sid){
+	public ResponseEntity<Boolean> fillAttendance(@PathVariable Integer mid,@PathVariable Integer sid){
 		return attendanceService.fillAttendance(mid,sid);
 	}
 }

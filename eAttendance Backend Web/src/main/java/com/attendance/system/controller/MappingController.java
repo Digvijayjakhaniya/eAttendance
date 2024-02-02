@@ -12,16 +12,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Mapping;
 import com.attendance.system.model.MappingWrapper;
-import com.attendance.system.service.MappingService;
-
-import jakarta.servlet.http.HttpSession;
+import com.attendance.system.service.impl.MappingServiceImpl;
 
 @RestController
 @RequestMapping("mapping")
 public class MappingController {
 
 	@Autowired
-	MappingService mappingService;
+	private MappingServiceImpl mappingService;
 
 	@RequestMapping
 	public ModelAndView manage() {
@@ -40,7 +38,7 @@ public class MappingController {
 	}
 
 	@DeleteMapping("delete/{mid}")
-	public ResponseEntity<Integer> deleteMapping(@PathVariable("mid") Integer mid) {
+	public ResponseEntity<Integer> deleteMapping(@PathVariable Integer mid) {
 
 		return mappingService.deleteMapping(mid);
 

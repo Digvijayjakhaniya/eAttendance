@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Admin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Integer adminId; 
+	private Integer adminId;
 	private String email;
 	private String password;
 }

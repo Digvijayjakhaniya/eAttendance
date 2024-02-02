@@ -1,7 +1,7 @@
 <%@page import="com.attendance.system.model.Faculty"%>
 <%@page import="java.util.List"%>
 <%@page import="org.springframework.beans.factory.annotation.Autowired"%>
-<%@page import="com.attendance.system.service.FacultyService"%>
+<%@page import="com.attendance.system.service.impl.FacultyServiceImpl"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
