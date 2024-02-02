@@ -15,16 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Faculty;
-import com.attendance.system.service.FacultyService;
-
-import jakarta.servlet.http.HttpSession;
+import com.attendance.system.service.impl.FacultyServiceImpl;
 
 @RestController
 @RequestMapping("faculty")
 public class FacultyController {
 
+
 	@Autowired
-	FacultyService facultyService;
+	private FacultyServiceImpl facultyService;
 
 	@RequestMapping
 	public ModelAndView faculty() {
@@ -42,25 +41,25 @@ public class FacultyController {
 	}
 	
 	@GetMapping("getFacultyById/{id}")
-	public ResponseEntity<Faculty> getFacultyById(@PathVariable("id") Integer id) {
+	public ResponseEntity<Faculty> getFacultyById(@PathVariable Integer id) {
 		return facultyService.getFacultyById(id);
 	}
 	
 	@GetMapping("auth/{email}/{pass}")
-	public ResponseEntity<Faculty> authinticate(@PathVariable("email") String email,@PathVariable("pass") String password){
+	public ResponseEntity<Faculty> authinticate(@PathVariable String email,@PathVariable("pass") String password){
 		return facultyService.authinticate(email,password);
 	}
 	
 
 	@PutMapping("updateFacultyById/{id}")
-	public ResponseEntity<String> updateFacultyById(@PathVariable("id") Integer id, @RequestParam("updFacEnroll") String updFacEnroll,
-			@RequestParam("updFacName") String updFacName, @RequestParam("updFacPass") String updFacPass, @RequestParam("updFacEmail") String updFacEmail) {
+	public ResponseEntity<String> updateFacultyById(@PathVariable Integer id, @RequestParam String updFacEnroll,
+			@RequestParam String updFacName, @RequestParam String updFacPass, @RequestParam String updFacEmail) {
 		Faculty faculty = new Faculty(id,updFacEnroll,updFacEmail,updFacName,updFacPass);
 		return facultyService.updateFacultyById(id, faculty);
 	}
 
 	@DeleteMapping("deleteFacultyById/{id}")
-	public ResponseEntity<Integer> deleteFacultyById(@PathVariable("id") Integer id) {
+	public ResponseEntity<Integer> deleteFacultyById(@PathVariable Integer id) {
 		return facultyService.deleteFacultyById(id);
 	}
 }

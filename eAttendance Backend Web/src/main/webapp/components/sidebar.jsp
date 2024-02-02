@@ -1,5 +1,6 @@
 <%@page import="com.attendance.system.model.Faculty"%>
 <%@page import="com.attendance.system.model.Admin"%>
+
 <!-- Sidebar -->
 <ul
 	class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
@@ -13,8 +14,7 @@
 		</div>
 		<div class="sidebar-brand-text mx-3">
 			<small>Welcome</small>
-			
-
+			Shreya 
 		</div>
 	</a>
 

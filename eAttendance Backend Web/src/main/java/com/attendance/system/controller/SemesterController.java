@@ -15,17 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Semester;
-import com.attendance.system.service.SemesterService;
-
-import jakarta.servlet.http.HttpSession;
+import com.attendance.system.service.impl.SemesterServiceImpl;
 
 @RestController
 @RequestMapping("semester")
 public class SemesterController {
 
-
 	@Autowired
-	SemesterService semesterService;
+	private SemesterServiceImpl semesterService;
 
 	@RequestMapping
 	public ModelAndView semester() {
@@ -43,18 +40,18 @@ public class SemesterController {
 	}
 
 	@GetMapping("get/{sid}")
-	public ResponseEntity<Semester> getSemester(@PathVariable("sid") Integer sid) {
+	public ResponseEntity<Semester> getSemester(@PathVariable Integer sid) {
 		return semesterService.getSemester(sid);
 	}
 
 	@PutMapping("update/{sid}")
-	public ResponseEntity<String> updateSemester(@PathVariable("sid") Integer sid,
+	public ResponseEntity<String> updateSemester(@PathVariable Integer sid,
 			@RequestParam("updSem") String semesterName) {
 		return semesterService.updateSemester(sid, semesterName);
 	}
 
 	@DeleteMapping("delete/{sid}")
-	public ResponseEntity<Integer> deleteSemester(@PathVariable("sid") Integer sid) {
+	public ResponseEntity<Integer> deleteSemester(@PathVariable Integer sid) {
 		return semesterService.deleteSemester(sid);
 	}
 }

@@ -13,17 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Mapping;
 import com.attendance.system.model.Student;
-import com.attendance.system.service.StudentService;
-
-import jakarta.servlet.http.HttpSession;
+import com.attendance.system.service.impl.StudentServiceImpl;
 
 @RestController
 @RequestMapping("student")
 public class StudentController {
 	
-	
 	@Autowired
-	StudentService studentService;
+	private StudentServiceImpl studentService;
 	
 	@RequestMapping
 	public ModelAndView student() {
@@ -36,7 +33,7 @@ public class StudentController {
 	}
 	
 	@GetMapping("auth/{email}/{pass}")
-	public ResponseEntity<Student> authenticateStudent(@PathVariable("email") String email,@PathVariable("pass") String password){
+	public ResponseEntity<Student> authenticateStudent(@PathVariable String email,@PathVariable("pass") String password){
 		return studentService.authenticate(email,password);
 	}
 	
@@ -46,7 +43,7 @@ public class StudentController {
 	}
 	
 	@GetMapping("isSession/{sid}")
-	public ResponseEntity<Mapping> isSession(@PathVariable("sid") Integer sid){
+	public ResponseEntity<Mapping> isSession(@PathVariable Integer sid){
 		return studentService.isSession(sid);	
 				
 	}

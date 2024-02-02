@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Course;
-import com.attendance.system.service.CourseService;
-
-import jakarta.servlet.http.HttpSession;
+import com.attendance.system.service.impl.CourseServiceImpl;
 
 @RestController
 @RequestMapping("course")
@@ -25,7 +23,7 @@ public class CourseController {
 
 
 	@Autowired
-	CourseService courseService;
+	private CourseServiceImpl courseService;
 
 	@RequestMapping
 	public ModelAndView course() {
@@ -43,7 +41,7 @@ public class CourseController {
 	}
 
 	@GetMapping("get/{cid}")
-	public ResponseEntity<Course> getCourse(@PathVariable("cid") Integer cid) {
+	public ResponseEntity<Course> getCourse(@PathVariable Integer cid) {
 		return courseService.getCourse(cid);
 	}
 
@@ -54,7 +52,7 @@ public class CourseController {
 	}
 
 	@DeleteMapping("delete/{cid}")
-	public ResponseEntity<Integer> deleteCourse(@PathVariable("cid") Integer cid) {
+	public ResponseEntity<Integer> deleteCourse(@PathVariable Integer cid) {
 		return courseService.deleteCourse(cid);
 	}
 }
