@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Subject;
-import com.attendance.system.service.impl.SubjectServiceImpl;
+import com.attendance.system.service.SubjectService;
 
 @RestController
 @RequestMapping("subjects")
 public class SubjectController {
 
 	@Autowired
-	private SubjectServiceImpl subjectService;
+	private SubjectService subjectService;
 
 	@RequestMapping
 	public ModelAndView subject() {

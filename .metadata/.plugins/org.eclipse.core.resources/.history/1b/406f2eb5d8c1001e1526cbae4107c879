@@ -1,0 +1,26 @@
+package com.attendance.system.config.eventListeners;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.security.authentication.event.LogoutSuccessEvent;
+import org.springframework.stereotype.Component;
+
+import com.topay.all.system.service.UserService;
+
+@Component
+public class LogoutSuccessEventListener implements ApplicationListener<LogoutSuccessEvent> {
+
+	@Autowired
+	private com.attendance.system.service.UserService userService;
+
+	@Override
+	public void onApplicationEvent(LogoutSuccessEvent event) {
+		// Handle successful logout event
+		String email = securityContext.getAuthentication().getName();
+
+		userService.updateLoginStatus(email, false);
+
+//		System.out.println("User logged out: " + username);
+		// Add your custom logic here
+	}
+}

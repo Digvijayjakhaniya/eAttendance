@@ -13,5 +13,5 @@ public interface AttendanceService {
 			String facultyId);
 	ResponseEntity<String> stopSession(String course_id, String subject_id, String sem_id, String division,
 			String facultyId);
-	ResponseEntity<Boolean> fillAttendance(Integer mid, Integer sid);
+	ResponseEntity<Boolean> fillAttendance(Integer mid, Long sid);
 }

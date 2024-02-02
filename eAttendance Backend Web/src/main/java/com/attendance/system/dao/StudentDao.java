@@ -6,12 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.attendance.system.model.Student;
+import com.attendance.system.model.SiteUser;
 
-public interface StudentDao extends JpaRepository<Student, Integer>{
 
-	Student findByStudentEmailAndStudentPassword(String email, String password);
+public interface StudentDao extends JpaRepository<Student, Long>{
 
 	@Query(value="SELECT DISTINCT student_division FROM STUDENT",nativeQuery=true)
 	List<String> getDivisons();
+	
+	Student findByUser(SiteUser user);
 
 }

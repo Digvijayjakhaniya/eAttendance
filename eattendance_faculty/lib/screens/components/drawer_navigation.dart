@@ -39,7 +39,7 @@ class DrawerNavigation extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const ContactUs()));
             },
           ),
-          const Spacer(),
+          // const Spacer(),
           SizedBox(
             width: double.infinity, // Full width
             child: TextButton.icon(

@@ -1,0 +1,5 @@
+package com.attendance.system.api.v1.controller;
+
+public class ApiStudentController {
+
+}

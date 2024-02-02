@@ -1,5 +1,5 @@
+<%@page import="com.attendance.system.model.SiteUser"%>
 <%@page import="com.attendance.system.model.Mapping"%>
-<%@page import="com.attendance.system.model.Faculty"%>
 <%@page import="com.attendance.system.model.Semester"%>
 <%@page import="com.attendance.system.model.Subject"%>
 <%@page import="java.util.List"%>
@@ -93,15 +93,16 @@
 											class="form-control custom-select" required>
 											<option value>Select Faculty</option>
 											<%
-											List<Faculty> faculties = mappingWrapper.getFaculties();
-											for (Faculty faculty : faculties) {
+											List<SiteUser> faculties = mappingWrapper.getFaculties();
+											for (SiteUser faculty : faculties) {
 											%>
-											<option value="<%=faculty.getFacultyId()%>"><%=faculty.getFacultyName()%></option>
+											<option value="<%=faculty.getUserId()%>"><%=faculty.getUserName()%></option>
 											<%
 											}
 											%>
 										</select>
 									</div>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<div class="mt-2 mb-2" id="mappingResponse"></div>
 									<button type="submit"
 										class="btn btn-primary btn-user btn-block">Add
@@ -150,7 +151,7 @@
 												<td><%=mapping.getCourse().getCourseName()%></td>
 												<td><%=mapping.getSubject().getSubjectName()%></td>
 												<td><%=mapping.getSemester().getSemesterName()%></td>
-												<td><%=mapping.getFaculty().getFacultyName()%></td>
+												<td><%=mapping.getFaculty().getUserName()%></td>
 												<!-- 
 												
 												// Update Button

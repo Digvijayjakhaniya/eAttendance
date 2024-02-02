@@ -44,6 +44,7 @@
 											id="subjectName" name="subjectName"
 											placeholder="Enter Subject Name" />
 									</div>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<div class="mt-2 mb-2" id="subjectResponse"></div>
 									<button type="submit"
 										class="btn btn-primary btn-user btn-block">Add

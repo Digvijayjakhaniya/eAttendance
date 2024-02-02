@@ -88,7 +88,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 	@Override
-	public ResponseEntity<Boolean> fillAttendance(Integer mid, Integer sid) {
+	public ResponseEntity<Boolean> fillAttendance(Integer mid, Long sid) {
 		try {
 
 			Mapping mapping = mappingService.getMapping(mid).getBody();
@@ -96,7 +96,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 			System.err.println("filling Attendance");
 			if (mapping !=null && student !=null && sessionService.isSessionAvailable(mapping.getCourse().getCourseId().toString(),
 					mapping.getSubject().getSubjectId().toString(), mapping.getSemester().getSemesterId().toString(),
-					student.getStudentDivision(), mapping.getFaculty().getFacultyId().toString())) {
+					student.getStudentDivision(), mapping.getFaculty().getUserId().toString())) {
 				System.err.println("session is active");
 				Attendance attendance = new Attendance();
 				attendance.setDateTime(new Date());

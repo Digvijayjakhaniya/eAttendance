@@ -1,0 +1,6 @@
+package com.attendance.system.service;
+
+public interface UserService {
+	
+
+}

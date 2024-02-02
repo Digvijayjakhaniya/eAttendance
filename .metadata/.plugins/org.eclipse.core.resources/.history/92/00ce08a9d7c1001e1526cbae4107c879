@@ -1,0 +1,69 @@
+package com.attendance.system.service.impl;
+
+import java.util.List;
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.attendance.system.dao.UserDao;
+import com.attendance.system.enums.Role;
+import com.attendance.system.model.SiteUser;
+import com.attendance.system.service.UserService;
+
+public class UserServiceImpl implements UserService{
+
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Override
+	public ResponseEntity<SiteUser> addUser(SiteUser user) {
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		user.setIsLocked(false);
+		user.setStatus(true);
+		return ResponseEntity.ok(userDao.save(user));
+	}
+
+	@Override
+	public ResponseEntity<SiteUser> updateUser(SiteUser user) {
+
+		SiteUser dbUser=userDao.findByUserId(user.getUserId());
+		
+		if (Objects.nonNull(user.getEmail()) && !"".equalsIgnoreCase(user.getEmail())) {
+			dbUser.setEmail(user.getEmail());
+		}
+		
+		if (Objects.nonNull(user.getPassword()) && !"".equalsIgnoreCase(user.getPassword())) {
+			dbUser.setEmail(user.getPassword());
+		}
+		
+		
+
+	}
+
+	@Override
+	public ResponseEntity<List<SiteUser>> getAllUsers() {
+		return ResponseEntity.ok(userDao.findAll());
+	}
+
+	@Override
+	public ResponseEntity<List<SiteUser>> getAllUsers(Role role) {
+		return ResponseEntity.ok(userDao.findByRole(role));
+	}
+
+	@Override
+	public ResponseEntity<SiteUser> getUser(Integer userId) {
+		return ResponseEntity.ok(userDao.findById(userId).get());
+	}
+
+	@Override
+	public ResponseEntity<SiteUser> getUser(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+}

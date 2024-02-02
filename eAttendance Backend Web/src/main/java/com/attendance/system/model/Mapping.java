@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Mapping {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer mapId;
 	@ManyToOne
 	private Course course;
@@ -24,5 +24,5 @@ public class Mapping {
 	@ManyToOne
 	private Semester semester;
 	@ManyToOne
-	private Faculty faculty;
+	private SiteUser faculty;
 }

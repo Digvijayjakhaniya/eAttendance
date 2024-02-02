@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Course {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer courseId;
 	private String courseName;
 

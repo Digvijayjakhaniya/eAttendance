@@ -11,32 +11,36 @@ import com.attendance.system.dao.MappingDao;
 import com.attendance.system.model.Course;
 import com.attendance.system.model.Mapping;
 import com.attendance.system.model.MappingWrapper;
+import com.attendance.system.service.CourseService;
 import com.attendance.system.service.MappingService;
+import com.attendance.system.service.SemesterService;
+import com.attendance.system.service.SubjectService;
+import com.attendance.system.service.UserService;
 
 @Service
 public class MappingServiceImpl implements MappingService {
 
 	@Autowired
-	private CourseServiceImpl courseService;
+	private CourseService courseService;
 
 	@Autowired
-	private SubjectServiceImpl subjectService;
+	private SubjectService subjectService;
 
 	@Autowired
-	private SemesterServiceImpl semesterService;
-
-	@Autowired
-	private FacultyServiceImpl facultyService;
+	private SemesterService semesterService;
 
 	@Autowired
 	private MappingDao mappingDao;
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public ResponseEntity<MappingWrapper> getAll() {
 		try {
 			MappingWrapper mappingWrapper = new MappingWrapper(courseService.getAllCources().getBody(),
 					subjectService.getAllSubjects().getBody(), semesterService.getAllSemesters().getBody(),
-					facultyService.getAllFaculty().getBody(), mappingDao.findAll());
+					userService.getAllUsers().getBody(), mappingDao.findAll());
 			return new ResponseEntity<MappingWrapper>(mappingWrapper, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -63,13 +67,13 @@ public class MappingServiceImpl implements MappingService {
 			return new ResponseEntity<Integer>(0, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@Override
-	public ResponseEntity<Mapping> getMapping(Integer mid){
+	public ResponseEntity<Mapping> getMapping(Integer mid) {
 		try {
-			return new ResponseEntity<Mapping>(mappingDao.findById(mid).get(),HttpStatus.OK);
-		}catch (Exception e) {
-			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Mapping>(mappingDao.findById(mid).get(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 	}
 

@@ -1,0 +1,17 @@
+package com.attendance.system.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.attendance.system.model.SiteUser;
+import com.attendance.system.enums.Role;
+
+
+public interface UserDao extends JpaRepository<SiteUser, Integer>{
+
+	public List<SiteUser> findByRole(Role role);
+	
+	public SiteUser findByUserId(Long userId);
+	
+}

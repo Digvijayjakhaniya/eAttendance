@@ -1,5 +1,3 @@
-<%@page import="com.attendance.system.model.Faculty"%>
-<%@page import="com.attendance.system.model.Admin"%>
 
 <!-- Sidebar -->
 <ul

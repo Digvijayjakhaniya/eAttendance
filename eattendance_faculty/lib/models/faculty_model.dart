@@ -2,36 +2,36 @@ import 'dart:convert';
 
 class Faculty {
   int facultyId;
-  String facultyEnrollment;
-  String facultyEmail;
-  String facultyName;
-  String facultyPassword;
+  String enrollment;
+  String email;
+  String username;
+  String token;
 
   Faculty({
     required this.facultyId,
-    required this.facultyEnrollment,
-    required this.facultyEmail,
-    required this.facultyName,
-    required this.facultyPassword,
+    required this.enrollment,
+    required this.email,
+    required this.username,
+    required this.token,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'facultyId': facultyId,
-      'facultyEnrollment': facultyEnrollment,
-      'facultyEmail': facultyEmail,
-      'facultyName': facultyName,
-      'facultyPassword': facultyPassword,
+      'enrollment': enrollment,
+      'email': email,
+      'username': username,
+      'token': token,
     };
   }
 
   factory Faculty.fromMap(Map<String, dynamic> map) {
     return Faculty(
       facultyId: map['facultyId'] as int,
-      facultyEnrollment: map['facultyEnrollment'] as String,
-      facultyEmail: map['facultyEmail'] as String,
-      facultyName: map['facultyName'] as String,
-      facultyPassword: map['facultyPassword'] as String,
+      enrollment: map['enrollment'] as String,
+      email: map['email'] as String,
+      username: map['username'] as String,
+      token: map['token'] as String,
     );
   }
 

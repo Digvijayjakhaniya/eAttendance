@@ -14,7 +14,7 @@ public class MappingWrapper {
 	private List<Course> courses;
 	private List<Subject> subjects;
 	private List<Semester> semesters;
-	private List<Faculty> faculties;
+	private List<SiteUser> faculties;
 	private List<Mapping> mappings;
 
 }

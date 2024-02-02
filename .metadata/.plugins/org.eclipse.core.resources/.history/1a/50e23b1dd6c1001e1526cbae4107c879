@@ -1,0 +1,8 @@
+package com.attendance.system.service;
+
+import com.attendance.system.model.SiteUser;
+
+public interface UserService {
+	public addUser(SiteUser user);
+
+}

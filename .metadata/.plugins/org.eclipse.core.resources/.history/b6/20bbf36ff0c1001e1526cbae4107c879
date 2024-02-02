@@ -1,0 +1,21 @@
+package com.attendance.system.api.dtos;
+
+import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+@AllArgsConstructor
+public class AuthResponse {
+	private final String token;
+	private final Date expity;
+	private final String username;
+	private final String email;
+	private final String enrollment;
+	private final String division;
+	private final String course;
+	private final String batch;
+}

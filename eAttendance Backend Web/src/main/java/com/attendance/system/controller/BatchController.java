@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Batch;
-import com.attendance.system.service.impl.BatchServiceImpl;
+import com.attendance.system.service.BatchService;
 
 @RestController
 @RequestMapping("batch")
@@ -23,7 +23,7 @@ public class BatchController {
 
 	
 	@Autowired
-	private BatchServiceImpl batchService;
+	private BatchService batchService;
 
 	@RequestMapping
 	public ModelAndView batch() {

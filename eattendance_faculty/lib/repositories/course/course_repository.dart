@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:eattendance_faculty/models/token_manager.dart';
+
 import '../../models/course_model.dart';
 import '../../utility/constants.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,8 @@ class CourseRepository {
   static CourseRepository get instance => Get.find();
 
   Future<List<Course>> getCourses() async {
-    final response = await http.get(Uri.parse("$apiUrl/course/get"));
+    final response = await http.get(Uri.parse("$apiUrl/course/getAll"),
+        headers: createAuthorizationHeaders(await TokenManager.getToken()));
 
     if (response.statusCode == 200) {
       List<dynamic> courseList = jsonDecode(response.body);

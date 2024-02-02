@@ -46,7 +46,7 @@ public class AttendanceController {
 	}
 	
 	@GetMapping("fill/{mid}/{sid}")
-	public ResponseEntity<Boolean> fillAttendance(@PathVariable Integer mid,@PathVariable Integer sid){
+	public ResponseEntity<Boolean> fillAttendance(@PathVariable Integer mid,@PathVariable Long sid){
 		return attendanceService.fillAttendance(mid,sid);
 	}
 }

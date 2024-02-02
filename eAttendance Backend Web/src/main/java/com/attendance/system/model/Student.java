@@ -5,7 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,17 +15,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Student {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Integer studentId;
-	private String studentEnrollment;
-	private String studentName;
-	private String studentEmail;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long studentId;
+	
 	private String studentDivision;
-	private String studentPassword;
+	
 	@ManyToOne
 	private Course studentCourse;
+	
 	@ManyToOne
 	private Batch studentBatch;
+	
+	@OneToOne
+	private SiteUser user;
 }

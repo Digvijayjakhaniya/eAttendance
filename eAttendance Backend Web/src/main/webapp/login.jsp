@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <title>eAttendance - Login</title>
-<jsp:include page="components/head-imports.jsp"></jsp:include>
+
+<jsp:include page="components/head-imports.jsp" />
+
 </head>
 
 <body class="bg-gradient-primary">
@@ -26,12 +28,12 @@
 									</div>
 						
 									
-									<form class="user" action="login/auth" method="post">
+									<form class="user" method="post">
 										<div class="form-group">
 											<input
 												type="email"
-												class="form-control form-control-user" id="email"
-												name="email" aria-describedby="emailHelp"
+												class="form-control form-control-user" id="username"
+												name="username" aria-describedby="emailHelp"
 												placeholder="Enter Email Address..." required
 											>
 										</div>
@@ -41,31 +43,7 @@
 												id="exampleInputPassword" placeholder="Password" required
 											>
 										</div>
-										<div class="form-group d-flex justify-content-around">
-											<label class="form-check-label">Login Type: </label>
-											<div>
-												<div class="form-check form-check-inline">
-													<input class="form-check-input loginType" type="radio"
-														name="loginType" id="loginType" value="Admin"
-														required>
-													<label class="form-check-label" for="loginType">Admin</label>
-												</div>
-												<div class="form-check form-check-inline">
-													<input class="form-check-input loginType" type="radio"
-														name="loginType" id="loginType2" value="Faculty"
-														 required>
-													<label class="form-check-label" for="loginType2">Faculty</label>
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="custom-control custom-checkbox small">
-												<input type="checkbox" name="remember-me" value="true"
-													class="custom-control-input" id="customCheck" checked>
-												<label class="custom-control-label" for="customCheck">Remember
-													Me</label>
-											</div>
-										</div>
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 										<div class="mt-2 mb-2">
 											<%
 											if (request.getParameter("error") != null) {
@@ -77,7 +55,6 @@
 											class="btn btn-primary btn-user btn-block">Login</button>
 										<hr>
 									</form>
-									<hr>
 									<div class="text-center">
 										<a class="small" href="forgot-password.jsp">Forgot
 											Password?</a>
@@ -97,9 +74,7 @@
 
 	</div>
 
-	<jsp:include page="components/js-imports.jsp"></jsp:include>
-
-	
+	<jsp:include page="components/js-imports.jsp" />
 
 </body>
 

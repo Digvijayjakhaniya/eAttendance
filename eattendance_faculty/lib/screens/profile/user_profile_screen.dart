@@ -25,7 +25,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
         const SizedBox(height: 10),
         Text(
-          authRepo.faculty.value!.facultyName,
+          authRepo.faculty.value!.username,
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -44,12 +44,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         //     icon: Icons.location_city,
         //     onPressed: () async {}),
         InfoCard(
-          text: authRepo.faculty.value!.facultyEnrollment,
+          text: authRepo.faculty.value!.enrollment,
           icon: Icons.email,
           onPressed: () async {},
         ),
         InfoCard(
-          text: authRepo.faculty.value!.facultyEmail,
+          text: authRepo.faculty.value!.email,
           icon: Icons.email,
           onPressed: () async {},
         ),

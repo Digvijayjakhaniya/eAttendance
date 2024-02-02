@@ -1,5 +1,13 @@
 /* Faculty Operations */
 
+const successRes = function(data){
+	return "<p class='text-success'>"+data+"</p>";
+}
+
+const errorRes = function(data){
+	return "<p class='text-danger'>"+data+"</p>";
+}
+
 //addFaculty
 $("#addFaculty").on("submit", function(e) {
 	e.preventDefault();
@@ -14,7 +22,7 @@ $("#addFaculty").on("submit", function(e) {
 		},
 		success: function(data) {
 			$("#facultyResponce").hide();
-			$("#facultyResponce").html(data);
+			$("#facultyResponce").html(successRes(data));
 			$("#facultyResponce").fadeIn("slow");
 		}
 	});
@@ -30,11 +38,10 @@ $(document).on("click", ".updFac", function() {
 			if (data == null) {
 				$("#editFacultyBody").html("<p class='text-danger'>No Data Found</p>")
 			} else {
-				$("#updFacEnroll").val(data.facultyEnrollment);
-				$("#updFacEmail").val(data.facultyEmail);
-				$("#updFacName").val(data.facultyName);
-				$("#updFacPass").val(data.facultyPassword);
-				$("#hdnFid").val(data.facultyId);
+				$("#updFacEnroll").val(data.enrollment);
+				$("#updFacEmail").val(data.email);
+				$("#updFacName").val(data.userName);
+				$("#hdnFid").val(data.userId);
 			}
 		}
 	});
@@ -49,7 +56,7 @@ $("#editFacultyForm").on("submit", function(e) {
 		data: $(this).serialize(),
 		success: function(data) {
 			$("#updFacRes").hide();
-			$("#updFacRes").html(data);
+			$("#updFacRes").html(successRes(data));
 			$("#updFacRes").fadeIn("slow");
 		}
 	})
@@ -99,7 +106,7 @@ $("#addCourse").on("submit", function(e) {
 		},
 		success: function(data) {
 			$("#courseResponce").hide();
-			$("#courseResponce").html(data);
+			$("#courseResponce").html(successRes(data));
 			$("#courseResponce").fadeIn("slow");
 		}
 	});
@@ -132,7 +139,7 @@ $("#editCourseForm").on("submit", function(e) {
 		data: $(this).serialize(),
 		success: function(data) {
 			$("#updCourseRes").hide();
-			$("#updCourseRes").html(data);
+			$("#updCourseRes").html(successRes(data));
 			$("#updCourseRes").fadeIn("slow");
 		}
 	});
@@ -183,7 +190,7 @@ $("#addSubject").on("submit", function(e) {
 		},
 		success: function(data) {
 			$("#subjectResponse").hide();
-			$("#subjectResponse").html(data);
+			$("#subjectResponse").html(successRes(data));
 			$("#subjectResponse").fadeIn("slow");
 		}
 	});
@@ -216,7 +223,7 @@ $("#editSubjectForm").on("submit", function(e) {
 		data: $(this).serialize(),
 		success: function(data) {
 			$("#updSubjectRes").hide();
-			$("#updSubjectRes").html(data);
+			$("#updSubjectRes").html(successRes(data));
 			$("#updSubjectRes").fadeIn("slow");
 		}
 	});
@@ -267,7 +274,7 @@ $("#addSemester").on("submit", function(e) {
 		},
 		success: function(data) {
 			$("#semesterResponse").hide();
-			$("#semesterResponse").html(data);
+			$("#semesterResponse").html(successRes(data));
 			$("#semesterResponse").fadeIn("slow");
 		}
 	});
@@ -300,7 +307,7 @@ $("#editSemForm").on("submit", function(e) {
 		data: $(this).serialize(),
 		success: function(data) {
 			$("#updSemRes").hide();
-			$("#updSemRes").html(data);
+			$("#updSemRes").html(successRes(data));
 			$("#updSemRes").fadeIn("slow");
 		}
 	});
@@ -350,7 +357,7 @@ $("#addMapping").on("submit", function(e) {
 		},
 		success: function(data) {
 			$("#mappingResponse").hide();
-			$("#mappingResponse").html(data);
+			$("#mappingResponse").html(successRes(data));
 			$("#mappingResponse").fadeIn("slow");
 		}
 	});
@@ -399,7 +406,7 @@ $("#addBatch").on("submit",function(e){
 		},
 		success:function(data){
 			$("#batchResponce").hide();
-			$("#batchResponce").html(data);
+			$("#batchResponce").html(successRes(data));
 			$("#batchResponce").fadeIn("slow");
 		}
 	});
@@ -434,7 +441,7 @@ $("#editBatchForm").on("submit",function(e){
 		data:$(this).serialize(),
 		success:function(data){
 			$("#updBatchRes").hide();
-			$("#updBatchRes").html(data);
+			$("#updBatchRes").html(successRes(data));
 			$("#updBatchRes").fadeIn("slow");
 		}
 	});
@@ -481,7 +488,7 @@ $("#addStudent").on("submit",function(e){
 		},
 		success:function(data){
 			$("#studentResponse").hide();
-			$("#studentResponse").html(data);
+			$("#studentResponse").html(successRes(data));
 			$("#studentResponse").fadeIn("slow");
 		}
 	});

@@ -46,27 +46,27 @@
 								<form class="user" id="addStudent">
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user"
-											id="studentEnrollment" name="studentEnrollment"
+											id="enrollment" name="enrollment"
 											placeholder="Enter Enrollment Id" required />
 									</div>
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user"
-											id="studentName" name="studentName"
+											id="userName" name="userName"
 											placeholder="Enter Student Name" required />
 									</div>
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user"
-											id="studentEmail" name="studentEmail"
+											id="email" name="email"
 											placeholder="Enter Student Email" required />
 									</div>
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user"
-											id="studentDivision" name="studentDivision"
+											id="studentDivision" name="studentDivision" maxlength="1"
 											placeholder="Enter Student Division" required />
 									</div>
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user"
-											id="studentPassword" name="studentPassword"
+											id="password" name="password"
 											placeholder="Enter Student Password" required />
 									</div>
 									<div class="form-group">
@@ -97,6 +97,7 @@
 											%>
 										</select>
 									</div>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<div class="mt-2 mb-2" id="studentResponse"></div>
 									<button type="submit"
 										class="btn btn-primary btn-user btn-block">Add
@@ -146,9 +147,9 @@
 											%>
 											<tr>
 												<td><%=student.getStudentId()%></td>
-												<td><%=student.getStudentEnrollment()%></td>
-												<td><%=student.getStudentName()%></td>
-												<td><%=student.getStudentEmail()%></td>
+												<td><%=student.getUser().getEnrollment()%></td>
+												<td><%=student.getUser().getUserName()%></td>
+												<td><%=student.getUser().getEmail()%></td>
 												<td><%=student.getStudentDivision()%></td>
 												<td><%=student.getStudentCourse().getCourseName()%></td>
 												<td><%=student.getStudentBatch().getBatchName()%></td>

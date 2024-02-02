@@ -8,19 +8,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.attendance.system.enums.Role;
+import com.attendance.system.model.Batch;
+import com.attendance.system.model.Course;
 import com.attendance.system.model.Mapping;
+import com.attendance.system.model.SiteUser;
 import com.attendance.system.model.Student;
-import com.attendance.system.service.impl.StudentServiceImpl;
+import com.attendance.system.service.StudentService;
+
+import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("student")
 public class StudentController {
 	
 	@Autowired
-	private StudentServiceImpl studentService;
+	private StudentService studentService;
 	
 	@RequestMapping
 	public ModelAndView student() {
@@ -28,13 +35,10 @@ public class StudentController {
 	}
 	
 	@PostMapping("add")
-	public ResponseEntity<String> addStudent(Student student){
-		return studentService.addStudent(student);
-	}
-	
-	@GetMapping("auth/{email}/{pass}")
-	public ResponseEntity<Student> authenticateStudent(@PathVariable String email,@PathVariable("pass") String password){
-		return studentService.authenticate(email,password);
+	public ResponseEntity<String> addStudent(@RequestParam("userName") String username,@RequestParam("email") String email,@RequestParam("enrollment") String enrollment,@RequestParam("studentDivision") String studentDivision,@PathParam("password") String password,@RequestParam("studentCourse") Course course,@RequestParam("studentBatch") Batch batch){
+		SiteUser user=SiteUser.builder().userName(username).email(email).password(password).enrollment(enrollment).role(Role.STUDENT).build();
+		Student student=Student.builder().studentBatch(batch).studentDivision(studentDivision).studentCourse(course).build();
+		return studentService.addStudent(student,user);
 	}
 	
 	@GetMapping("getDivisions")
@@ -43,7 +47,7 @@ public class StudentController {
 	}
 	
 	@GetMapping("isSession/{sid}")
-	public ResponseEntity<Mapping> isSession(@PathVariable Integer sid){
+	public ResponseEntity<Mapping> isSession(@PathVariable Long sid){
 		return studentService.isSession(sid);	
 				
 	}

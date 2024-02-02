@@ -1,0 +1,14 @@
+package com.attendance.system.api.v1.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.attendance.system.service.CourseService;
+
+@RestController
+public class ApiCourseController {
+	
+	@Autowired
+	private CourseService courseService;
+	
+}

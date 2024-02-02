@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Course;
-import com.attendance.system.service.impl.CourseServiceImpl;
+import com.attendance.system.service.CourseService;
 
 @RestController
 @RequestMapping("course")
@@ -23,7 +23,7 @@ public class CourseController {
 
 
 	@Autowired
-	private CourseServiceImpl courseService;
+	private CourseService courseService;
 
 	@RequestMapping
 	public ModelAndView course() {

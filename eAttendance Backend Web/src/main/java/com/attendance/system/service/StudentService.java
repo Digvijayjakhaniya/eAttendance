@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import com.attendance.system.model.Mapping;
+import com.attendance.system.model.SiteUser;
 import com.attendance.system.model.Student;
 import com.attendance.system.model.StudentWrapper;
 
@@ -14,14 +15,14 @@ public interface StudentService {
 
 	ResponseEntity<List<Student>> getAllStudents();
 
-	ResponseEntity<String> addStudent(Student student);
-
-	ResponseEntity<Student> authenticate(String email, String password);
+	ResponseEntity<String> addStudent(Student student,SiteUser user);
 
 	ResponseEntity<List<String>> getDivisons();
 
-	ResponseEntity<Mapping> isSession(Integer sid);
+	ResponseEntity<Mapping> isSession(Long sid);
 
-	ResponseEntity<Student> getStudent(Integer sid);
+	ResponseEntity<Student> getStudent(Long sid);
+	
+	ResponseEntity<Student> getStudent(SiteUser user);
 
 }

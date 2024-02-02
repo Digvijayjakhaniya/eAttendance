@@ -1,0 +1,28 @@
+package com.attendance.system.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import com.topay.all.system.entity.AuthUserDetails;
+import com.topay.all.system.entity.SiteUser;
+import com.topay.all.system.service.UserService;
+
+
+public class UserDetailsServiceImpl implements UserDetailsService{
+
+	@Autowired
+	private UserService userService;
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		 SiteUser user = userService.getUserByUsername(username).getBody();
+		 
+		if (user == null) {
+			throw new UsernameNotFoundException("Invalid Username Or Password");
+		}
+		
+		return new AuthUserDetails(user);
+	}
+}

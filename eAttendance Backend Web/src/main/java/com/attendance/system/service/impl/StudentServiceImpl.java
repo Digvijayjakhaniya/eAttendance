@@ -10,9 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.attendance.system.dao.StudentDao;
 import com.attendance.system.model.Mapping;
+import com.attendance.system.model.SiteUser;
 import com.attendance.system.model.Student;
 import com.attendance.system.model.StudentWrapper;
+import com.attendance.system.service.BatchService;
+import com.attendance.system.service.CourseService;
+import com.attendance.system.service.MappingService;
+import com.attendance.system.service.SessionService;
 import com.attendance.system.service.StudentService;
+import com.attendance.system.service.UserService;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -21,16 +27,19 @@ public class StudentServiceImpl implements StudentService {
 	private StudentDao studentDao;
 
 	@Autowired
-	private CourseServiceImpl courseService;
+	private CourseService courseService;
 
 	@Autowired
-	private MappingServiceImpl mappingService;
+	private MappingService mappingService;
 
 	@Autowired
-	private BatchServiceImpl batchService;
+	private BatchService batchService;
 	
 	@Autowired
-	private SessionServiceImpl sessionService;
+	private SessionService sessionService;
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public ResponseEntity<StudentWrapper> getAll() {
@@ -53,23 +62,14 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public ResponseEntity<String> addStudent(Student student) {
+	public ResponseEntity<String> addStudent(Student student,SiteUser user) {
 		try {
+			student.setUser(userService.addUser(user).getBody());
 			studentDao.save(student);
 			return new ResponseEntity<String>("<p class='text-success'>Student Added SuccessFully</p>", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("<p class='text-danger'>" + e.getMessage() + "</p>",
 					HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@Override
-	public ResponseEntity<Student> authenticate(String email, String password) {
-		try {
-			return new ResponseEntity<Student>(studentDao.findByStudentEmailAndStudentPassword(email, password),
-					HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -84,7 +84,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public ResponseEntity<Mapping> isSession(Integer sid) {
+	public ResponseEntity<Mapping> isSession(Long sid) {
 		try {
 			Student student = studentDao.findById(sid).get();
 			String course_id = student.getStudentCourse().getCourseId().toString();
@@ -92,7 +92,7 @@ public class StudentServiceImpl implements StudentService {
 			List<Mapping> mappings = mappingService.getMappingsFor(courseService.getCourse(Integer.parseInt(course_id)).getBody());
 //			return new ResponseEntity<Mapping>(mappings.get(0),HttpStatus.OK);
 			for (Mapping mapping : mappings) {
-				String facultyId = mapping.getFaculty().getFacultyId().toString();
+				String facultyId = mapping.getFaculty().getUserId().toString();
 				String sem_id = mapping.getSemester().getSemesterId().toString();
 				String subject_id = mapping.getSubject().getSubjectId().toString();
 				String sessionId = course_id + "-" + subject_id + "-" + sem_id + "-" + division + "-" + facultyId;
@@ -109,13 +109,18 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
-	public ResponseEntity<Student> getStudent(Integer sid){
+	public ResponseEntity<Student> getStudent(Long sid){
 		try {
 			return new ResponseEntity<Student>(studentDao.findById(sid).get(),HttpStatus.OK);	
 		}catch (Exception e) {
 			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
 		}
 		
+	}
+
+	@Override
+	public ResponseEntity<Student> getStudent(SiteUser user) {
+		return ResponseEntity.ok(studentDao.findByUser(user));
 	}
 
 }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:eattendance_faculty/models/token_manager.dart';
+
 import '../../utility/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +11,8 @@ class DivisionsRepository {
   static DivisionsRepository get instance => Get.find();
 
   Future<List<String>> getDivisons() async {
-    final response = await http.get(Uri.parse("$apiUrl/student/getDivisions"));
+    final response = await http.get(Uri.parse("$apiUrl/student/getDivisions"),
+        headers: createAuthorizationHeaders(await TokenManager.getToken()));
     if (response.statusCode == 200) {
       List<dynamic> divisionList = jsonDecode(response.body);
       List<String> divisions = divisionList.map((dynamic division) {

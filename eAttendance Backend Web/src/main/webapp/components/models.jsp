@@ -12,7 +12,10 @@
 				to end your current session.</div>
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-				<a class="btn btn-primary" href="login/logout">Logout</a>
+				<form action="/logout" method="POST">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<button class="btn btn-primary" type="submit">Logout</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -49,7 +52,7 @@
 					</div>
 					<div class="form-group">
 						<input type="password" class="form-control form-control-user"
-							id=updFacPass name="updFacPass" value="abc@123"
+							id=updFacPass name="updFacPass"
 							placeholder="Temporary Password" required />
 					</div>
 					<input type="hidden" id="hdnFid" />

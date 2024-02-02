@@ -43,6 +43,7 @@
 											id="semesterName" name="semesterName"
 											placeholder="Enter semester" />
 									</div>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<div class="mt-2 mb-2" id="semesterResponse"></div>
 									<button type="submit"
 										class="btn btn-primary btn-user btn-block">Add

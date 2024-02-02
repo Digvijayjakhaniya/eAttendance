@@ -42,6 +42,7 @@
 											id="courseName" name="courseName"
 											placeholder="Enter Course Name" required />
 									</div>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<div class="mt-2 mb-2" id="courseResponce"></div>
 									<button type="submit"
 										class="btn btn-primary btn-user btn-block">Add Course

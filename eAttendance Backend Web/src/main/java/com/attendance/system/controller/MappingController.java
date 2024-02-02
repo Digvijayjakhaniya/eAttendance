@@ -12,14 +12,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Mapping;
 import com.attendance.system.model.MappingWrapper;
-import com.attendance.system.service.impl.MappingServiceImpl;
+import com.attendance.system.service.MappingService;
 
 @RestController
 @RequestMapping("mapping")
 public class MappingController {
 
 	@Autowired
-	private MappingServiceImpl mappingService;
+	private MappingService mappingService;
 
 	@RequestMapping
 	public ModelAndView manage() {

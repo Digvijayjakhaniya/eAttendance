@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.attendance.system.model.Semester;
-import com.attendance.system.service.impl.SemesterServiceImpl;
+import com.attendance.system.service.SemesterService;
 
 @RestController
 @RequestMapping("semester")
 public class SemesterController {
 
 	@Autowired
-	private SemesterServiceImpl semesterService;
+	private SemesterService semesterService;
 
 	@RequestMapping
 	public ModelAndView semester() {
