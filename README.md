@@ -61,7 +61,7 @@ We welcome contributions to enhance the eAttendance System. Please follow the [c
 ### Contributors
 
 <a href="https://github.com/smit-joshi814/eAttendance/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=smit-joshi814/eAttendance" />
+  <img src="https://contrib.rocks/image?repo=smit-joshi814/eAttendance&max=5" />
 </a>
 
 
