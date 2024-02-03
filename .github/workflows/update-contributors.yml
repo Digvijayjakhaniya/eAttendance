@@ -15,27 +15,27 @@ jobs:
       - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Updated to Node.js version 20
+          node-version: '20'  # Use Node.js version 20
 
       - name: Install Dependencies
         run: npm install @octokit/rest
 
       - name: Update Contributors
-        run: |
-          const fs = require('fs');
-          const { Octokit } = require('@octokit/rest');
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs');
+            const { Octokit } = require('@octokit/rest');
 
-          const octokit = new Octokit();
-          const repo = github.repository;  // Using github.repository to get repository information
+            const octokit = new Octokit();
+            const repo = context.repo;  # Access repository information using context.repo
 
-          try {
-            const response = await octokit.repos.listContributors({
+            octokit.repos.listContributors({
               owner: repo.owner,
               repo: repo.repo
-            });
-
-            const contributors = await Promise.all(
-              response.data.slice(0, 10).map(async contributor => {
+            })
+            .then(response => {
+              const contributors = response.data.slice(0, 10).map(async contributor => {
                 try {
                   const user = await octokit.users.get({ username: contributor.login });
                   const avatarUrl = user.data.avatar_url;
@@ -44,16 +44,17 @@ jobs:
                   console.error(`Error fetching avatar for ${contributor.login}: ${error}`);
                   return `- [${contributor.login}](${contributor.html_url})`;  // Include only username and link
                 }
-              })
-            );
+              });
 
-            const readme = fs.readFileSync('README.md', 'utf8');
-            const updatedReadme = readme.replace('{{ contributors }}', contributors.join('\n'));
-            fs.writeFileSync('README.md', updatedReadme);
-          } catch (error) {
-            console.error(`Error updating contributors: ${error}`);
-            process.exit(1);
-          }
+              Promise.all(contributors)
+                .then(contributorList => {
+                  const readme = fs.readFileSync('README.md', 'utf8');
+                  const updatedReadme = readme.replace('{{ contributors }}', contributorList.join('\n'));
+                  fs.writeFileSync('README.md', updatedReadme);
+                })
+                .catch(error => console.error(`Error updating README: ${error}`));
+            })
+            .catch(error => console.error(`Error fetching contributors: ${error}`));
 
       - name: Add and Commit Changes
         run: git add README.md && git commit -m "Update Contributors"
