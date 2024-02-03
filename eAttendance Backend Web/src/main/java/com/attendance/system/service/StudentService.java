@@ -3,6 +3,7 @@ package com.attendance.system.service;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 
 import com.attendance.system.model.Mapping;
 import com.attendance.system.model.SiteUser;
@@ -19,9 +20,9 @@ public interface StudentService {
 
 	ResponseEntity<List<String>> getDivisons();
 
-	ResponseEntity<Mapping> isSession(Long sid);
+	ResponseEntity<Mapping> isSession(@NonNull Long sid);
 
-	ResponseEntity<Student> getStudent(Long sid);
+	ResponseEntity<Student> getStudent(@NonNull Long sid);
 	
 	ResponseEntity<Student> getStudent(SiteUser user);
 

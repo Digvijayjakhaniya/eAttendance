@@ -1,13 +1,18 @@
 package com.attendance.system.api.v1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.attendance.system.model.Mapping;
+import com.attendance.system.model.QrRequest;
 import com.attendance.system.service.AttendanceService;
 import com.attendance.system.service.StudentService;
 
@@ -17,7 +22,7 @@ public class ApiSessionController {
 
 	@Autowired
 	private AttendanceService attendanceService;
-	
+
 	@Autowired
 	private StudentService studentService;
 
@@ -34,15 +39,16 @@ public class ApiSessionController {
 			@PathVariable("div") String division, @PathVariable("fid") String facultyId) {
 		return attendanceService.stopSession(course_id, subject_id, sem_id, division, facultyId);
 	}
-	
+
 	@GetMapping("isSession/{sid}")
-	public ResponseEntity<Mapping> isSession(@PathVariable Long sid){
-		return studentService.isSession(sid);	
-				
+	public ResponseEntity<Mapping> isSession(@PathVariable @NonNull Long sid) {
+		return studentService.isSession(sid);
+
 	}
-	
-	@GetMapping("fillAttendance/{mid}/{sid}")
-	public ResponseEntity<Boolean> fillAttendance(@PathVariable Integer mid,@PathVariable Long sid){
-		return attendanceService.fillAttendance(mid,sid);
+
+	@PostMapping("fillAttendance/{mid}/{sid}")
+	public ResponseEntity<Boolean> fillAttendance(@PathVariable Integer mid, @PathVariable @NonNull Long sid,
+			@RequestBody QrRequest qrRequest) {
+		return attendanceService.fillAttendance(mid, sid, qrRequest);
 	}
 }

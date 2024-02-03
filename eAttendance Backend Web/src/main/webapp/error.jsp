@@ -2,14 +2,16 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
-
-<title>eAttendance | Manage Courses</title>
-
-<jsp:include page="components/head-imports.jsp"></jsp:include>
+<title>eAttendance | Error</title>
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet" />
 
 </head>
 
@@ -29,21 +31,50 @@
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
 
-                    <!-- 404 Error Text -->
-                    <div class="text-center">
-                        <div class="error mx-auto" data-text="Opps!">Opps!</div>
-                        <p class="lead text-gray-800 mb-5">Unknown Error</p>
-                        <p class="text-gray-500 mb-0">  <%=request.getAttribute("error")!=null?request.getAttribute("error"):"We are sorry but our server encountered an internal error"%></p>
-                        <a href="/home">← Back to Dashboard</a>
-                    </div>
+					<!-- 404 Error Text -->
+					<div class="text-center">
+						<div class="error mx-auto" data-text="Opps!">Opps!</div>
+						<p class="lead text-gray-800 mb-5 mt-5">Unknown Error</p>
+						<p class="text-gray mb-0">
+							<%=request.getAttribute("error") != null
+		? request.getAttribute("error")
+		: "We are sorry but our server encountered an internal error"%></p>
 
-                </div>
+						<br /> <a class="btn btn-outline-primary" href="/home">← Back to
+							Dashboard</a> <br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+					</div>
+
+				</div>
 				<!-- /.container-fluid -->
 			</div>
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<jsp:include page="components/footer.jsp"></jsp:include>
+			<footer class="sticky-footer bg-white mt-auto">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto" id="currentYear">
+					</div>
+				</div>
+				<script>
+					var copyrightElement = document
+							.getElementById('currentYear');
+					copyrightElement.innerHTML = "Copyright &copy; eAttendance "
+							+ new Date().getFullYear();
+				</script>
+			</footer>
+
 			<!-- End of Footer -->
 		</div>
 		<!-- End of Content Wrapper -->
@@ -55,14 +86,8 @@
 		class="fas fa-angle-up"></i>
 	</a>
 
-	<jsp:include page="components/models.jsp"></jsp:include>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
 
-	<jsp:include page="components/js-imports.jsp"></jsp:include>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#side-courses").addClass("active")
-		});
-	</script>
 </body>
 </html>

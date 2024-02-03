@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
 		return ResponseEntity.ok(userDao.save(user));
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public ResponseEntity<SiteUser> updateUser(SiteUser user) {
 

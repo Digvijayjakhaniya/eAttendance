@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,7 @@ public class StudentController {
 	}
 	
 	@GetMapping("isSession/{sid}")
-	public ResponseEntity<Mapping> isSession(@PathVariable Long sid){
+	public ResponseEntity<Mapping> isSession(@PathVariable @NonNull Long sid){
 		return studentService.isSession(sid);	
 				
 	}

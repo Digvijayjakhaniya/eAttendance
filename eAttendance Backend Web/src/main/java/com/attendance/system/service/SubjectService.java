@@ -3,19 +3,20 @@ package com.attendance.system.service;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 
 import com.attendance.system.model.Subject;
 
 public interface SubjectService {
 
-	ResponseEntity<String> addSubject(Subject subject);
+	ResponseEntity<String> addSubject(@NonNull Subject subject);
 
-	ResponseEntity<Subject> getSubject(Integer sid);
+	ResponseEntity<Subject> getSubject(@NonNull Integer sid);
 
 	ResponseEntity<List<Subject>> getAllSubjects();
 
-	ResponseEntity<String> updateSubject(Integer sid, String subjectName);
+	ResponseEntity<String> updateSubject(@NonNull Integer sid, String subjectName);
 
-	ResponseEntity<Integer> deleteSubject(Integer sid);
+	ResponseEntity<Integer> deleteSubject(@NonNull Integer sid);
 
 }

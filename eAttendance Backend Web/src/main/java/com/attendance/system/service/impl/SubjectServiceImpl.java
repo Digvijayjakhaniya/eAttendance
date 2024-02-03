@@ -1,12 +1,14 @@
 package com.attendance.system.service.impl;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.attendance.system.dao.SubjectDao;
@@ -20,7 +22,7 @@ public class SubjectServiceImpl implements SubjectService {
 	private SubjectDao dao;
 
 	@Override
-	public ResponseEntity<String> addSubject(Subject subject) {
+	public ResponseEntity<String> addSubject(@NonNull Subject subject) {
 		try {
 			dao.save(subject);
 			return new ResponseEntity<String>("<p class='text-success'>SubjectAdded SuccessFully</p>", HttpStatus.OK);
@@ -30,8 +32,9 @@ public class SubjectServiceImpl implements SubjectService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<Subject> getSubject(Integer sid) {
+	public ResponseEntity<Subject> getSubject(@NonNull Integer sid) {
 		try {
 			return new ResponseEntity<Subject>(dao.findById(sid).get(), HttpStatus.OK);
 		} catch (Exception e) {
@@ -48,8 +51,9 @@ public class SubjectServiceImpl implements SubjectService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<String> updateSubject(Integer sid, String subjectName) {
+	public ResponseEntity<String> updateSubject(@NonNull Integer sid, String subjectName) {
 		try {
 			Subject subject = new Subject(sid, subjectName);
 			Subject dbSubject = dao.findById(sid).get();
@@ -65,7 +69,7 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	public ResponseEntity<Integer> deleteSubject(Integer sid) {
+	public ResponseEntity<Integer> deleteSubject(@NonNull Integer sid) {
 		try {
 			dao.deleteById(sid);
 			return new ResponseEntity<Integer>(1, HttpStatus.OK);

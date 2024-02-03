@@ -32,7 +32,8 @@ public class FacultyController {
 	
 
 	@PostMapping("add")
-	public ResponseEntity<String> addFaculty(SiteUser faculty) {
+	public ResponseEntity<String> addFaculty(@RequestParam("enrollment") String enrollment,@RequestParam("email") String email,@RequestParam("userName") String userName,@RequestParam("password") String password) {
+		SiteUser faculty=SiteUser.builder().enrollment(enrollment).userName(userName).email(email).password(password).build();
 		faculty.setRole(Role.FACULTY);
 		facultyService.addUser(faculty);
 		return ResponseEntity.ok("Faculty Added Successfully");

@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
-
-import 'package:eattendance_student/models/token_manager.dart';
 
 import '../auth/auth_repository.dart';
+import '../../models/token_manager.dart';
 import '../../models/mapping_model.dart';
 import '../../utility/constants.dart';
 import 'package:get/get.dart';
@@ -21,7 +19,6 @@ class SessionRepository {
           headers: createAuthorizationHeaders(await TokenManager.getToken()));
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
-        log(response.body.toString());
         return Mapping.fromJson(json);
       } else {
         return null;
@@ -32,16 +29,15 @@ class SessionRepository {
   }
 
   Future<bool> fillAttendance(Mapping map) async {
-    final response = await http.get(
-        Uri.parse(
-            "$apiUrl/session/fillAttendance/${map.mapId}/${authRepo.student.value!.studentId}"),
-        headers: createAuthorizationHeaders(await TokenManager.getToken()));
-    log(response.body.toString());
+    // remain to pass the AttendnceData in the Request
+    final response = await http.post(
+      Uri.parse(
+          "$apiUrl/session/fillAttendance/${map.mapId}/${authRepo.student.value!.studentId}"),
+      headers: createAuthorizationHeaders(await TokenManager.getToken()),
+    );
     if (response.statusCode == 200) {
-      log(response.body.toString());
       return bool.parse(response.body);
     } else {
-      log(response.statusCode.toString());
       throw Exception("Unable To Fill Attendance");
     }
   }

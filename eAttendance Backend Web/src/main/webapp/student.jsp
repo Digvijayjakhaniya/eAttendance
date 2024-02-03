@@ -123,7 +123,6 @@
 												<th>Student Division</th>
 												<th>Student Course</th>
 												<th>Student Batch</th>
-												<th>Edit</th>
 												<th>Delete</th>
 											</tr>
 										</thead>
@@ -136,7 +135,6 @@
 												<th>Student Division</th>
 												<th>Student Course</th>
 												<th>Student Batch</th>
-												<th>Edit</th>
 												<th>Delete</th>
 											</tr>
 										</tfoot>
@@ -153,12 +151,6 @@
 												<td><%=student.getStudentDivision()%></td>
 												<td><%=student.getStudentCourse().getCourseName()%></td>
 												<td><%=student.getStudentBatch().getBatchName()%></td>
-												<td><button type="button"
-														class="btn btn-warning updStudent"
-														data-sid="<%=student.getStudentId()%>" data-toggle="modal"
-														data-target="#editStudent">
-														<i class="fas fa-edit"></i>
-													</button></td>
 												<td><button type="button"
 														class="btn btn-danger updStudent"
 														data-sid="<%=student.getStudentId()%>">

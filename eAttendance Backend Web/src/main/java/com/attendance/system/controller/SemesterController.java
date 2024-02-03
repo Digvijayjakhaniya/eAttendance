@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class SemesterController {
 	}
 
 	@PostMapping("add")
-	public ResponseEntity<String> addSemester(Semester semester) {
+	public ResponseEntity<String> addSemester(@NonNull Semester semester) {
 		return semesterService.addSemester(semester);
 	}
 
@@ -40,18 +41,18 @@ public class SemesterController {
 	}
 
 	@GetMapping("get/{sid}")
-	public ResponseEntity<Semester> getSemester(@PathVariable Integer sid) {
+	public ResponseEntity<Semester> getSemester(@PathVariable @NonNull Integer sid) {
 		return semesterService.getSemester(sid);
 	}
 
 	@PutMapping("update/{sid}")
-	public ResponseEntity<String> updateSemester(@PathVariable Integer sid,
+	public ResponseEntity<String> updateSemester(@PathVariable @NonNull Integer sid,
 			@RequestParam("updSem") String semesterName) {
 		return semesterService.updateSemester(sid, semesterName);
 	}
 
 	@DeleteMapping("delete/{sid}")
-	public ResponseEntity<Integer> deleteSemester(@PathVariable Integer sid) {
+	public ResponseEntity<Integer> deleteSemester(@PathVariable @NonNull Integer sid) {
 		return semesterService.deleteSemester(sid);
 	}
 }

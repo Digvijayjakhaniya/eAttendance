@@ -2,8 +2,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+
+<link rel="manifest" href="webmanifest.json" >
+
+<meta name="description" content="eAttendance" />
+<meta name="author" content="Smit Joshi" />
 
 
 <!-- Custom fonts for this template-->

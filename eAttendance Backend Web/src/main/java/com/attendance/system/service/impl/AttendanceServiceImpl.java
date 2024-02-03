@@ -1,15 +1,19 @@
 package com.attendance.system.service.impl;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.attendance.system.dao.AttendanceDao;
 import com.attendance.system.model.Attendance;
 import com.attendance.system.model.Mapping;
+import com.attendance.system.model.QrRequest;
 import com.attendance.system.model.Student;
 import com.attendance.system.service.AttendanceService;
 
@@ -29,7 +33,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	private SessionServiceImpl sessionService;
 
 	@Override
-	public ResponseEntity<String> addAttendance(Attendance attendance) {
+	public ResponseEntity<String> addAttendance(@NonNull Attendance attendance) {
 		try {
 			attendanceDao.save(attendance);
 			return new ResponseEntity<String>("Attendance Marked SuccessFully", HttpStatus.OK);
@@ -39,7 +43,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 	
 	@Override
-	public ResponseEntity<String> updateAttendance(Integer aid, Boolean isPresent) {
+	public ResponseEntity<String> updateAttendance(@NonNull Integer aid, Boolean isPresent) {
 		try {
 			Attendance dbAttendance = attendanceDao.findById(aid).get();
 			dbAttendance.setIsPresent(isPresent);
@@ -49,8 +53,9 @@ public class AttendanceServiceImpl implements AttendanceService{
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<Attendance> getAttendance(Integer aid) {
+	public ResponseEntity<Attendance> getAttendance(@NonNull Integer aid) {
 		try {
 			return new ResponseEntity<Attendance>(attendanceDao.findById(aid).get(), HttpStatus.OK);
 		} catch (Exception e) {
@@ -88,15 +93,26 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 	@Override
-	public ResponseEntity<Boolean> fillAttendance(Integer mid, Long sid) {
+	public ResponseEntity<Boolean> fillAttendance(Integer mid,@NonNull Long sid,QrRequest request) {
 		try {
+			
+			LocalTime currentTime = LocalTime.now();
 
-			Mapping mapping = mappingService.getMapping(mid).getBody();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+	        LocalTime now = LocalTime.parse(currentTime.format(formatter), formatter);
+	        LocalTime createdAt = LocalTime.parse(request.getCreatedAt(), formatter);
+			
+	        long minutesDifference = Math.abs(now.until(createdAt, java.time.temporal.ChronoUnit.MINUTES));
+	        
+	        if(Long.parseLong(request.getDuration()) > minutesDifference) {
+	        	throw new Exception("Qr Expired, Please Try Again");
+	        }
+	        
+			Mapping mapping=mappingService.getMapping(mid).getBody();
 			Student student = studentService.getStudent(sid).getBody();
 			System.err.println("filling Attendance");
-			if (mapping !=null && student !=null && sessionService.isSessionAvailable(mapping.getCourse().getCourseId().toString(),
-					mapping.getSubject().getSubjectId().toString(), mapping.getSemester().getSemesterId().toString(),
-					student.getStudentDivision(), mapping.getFaculty().getUserId().toString())) {
+			if (request !=null && student !=null && sessionService.isSessionAvailable(request.getCourse(), request.getSubject(), request.getSem(), request.getDividion(), request.getFaculty())) {
 				System.err.println("session is active");
 				Attendance attendance = new Attendance();
 				attendance.setDateTime(new Date());

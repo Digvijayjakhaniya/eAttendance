@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class SubjectController {
 	}
 
 	@PostMapping("add")
-	public ResponseEntity<String> addSubject(Subject subject) {
+	public ResponseEntity<String> addSubject(@NonNull Subject subject) {
 		return subjectService.addSubject(subject);
 	}
 
@@ -40,18 +41,18 @@ public class SubjectController {
 	}
 
 	@GetMapping("get/{sid}")
-	public ResponseEntity<Subject> getSubject(@PathVariable Integer sid) {
+	public ResponseEntity<Subject> getSubject(@PathVariable @NonNull Integer sid) {
 		return subjectService.getSubject(sid);
 	}
 
 	@PutMapping("update/{sid}")
-	public ResponseEntity<String> updateSubject(@PathVariable Integer sid,
+	public ResponseEntity<String> updateSubject(@PathVariable @NonNull Integer sid,
 			@RequestParam("updSubject") String subjectName) {
 		return subjectService.updateSubject(sid, subjectName);
 	}
 
 	@DeleteMapping("delete/{sid}")
-	public ResponseEntity<Integer> deleteSubject(@PathVariable Integer sid) {
+	public ResponseEntity<Integer> deleteSubject(@PathVariable @NonNull Integer sid) {
 		return subjectService.deleteSubject(sid);
 	}
 }

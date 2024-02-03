@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.attendance.system.dao.BatchDao;
@@ -29,7 +30,7 @@ public class BatchServiceImpl implements BatchService {
 	}
 
 	@Override
-	public ResponseEntity<String> addBatch(Batch batch) {
+	public ResponseEntity<String> addBatch(@NonNull Batch batch) {
 		try {
 			batchDao.save(batch);
 			return new ResponseEntity<String>("<p class='text-success'>Batch added SuccessFully</p>", HttpStatus.OK);
@@ -39,8 +40,9 @@ public class BatchServiceImpl implements BatchService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<String> updateBatch(Integer bid, String batchName) {
+	public ResponseEntity<String> updateBatch(@NonNull Integer bid, String batchName) {
 		try {
 			Batch batch = new Batch(bid, batchName);
 			Batch dbBatch = batchDao.findById(bid).get();
@@ -57,7 +59,7 @@ public class BatchServiceImpl implements BatchService {
 	}
 
 	@Override
-	public ResponseEntity<Integer> deleteBatch(Integer bid) {
+	public ResponseEntity<Integer> deleteBatch(@NonNull Integer bid) {
 		try {
 			batchDao.deleteById(bid);
 			return new ResponseEntity<Integer>(1, HttpStatus.OK);
@@ -66,8 +68,9 @@ public class BatchServiceImpl implements BatchService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<Batch> getBatch(Integer bid) {
+	public ResponseEntity<Batch> getBatch(@NonNull Integer bid) {
 		try {
 			return new ResponseEntity<Batch>(batchDao.findById(bid).get(), HttpStatus.OK);
 		} catch (Exception e) {

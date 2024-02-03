@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +32,7 @@ public class BatchController {
 	}
 	
 	@PostMapping("add")
-	public ResponseEntity<String> addBatch(Batch batch){
+	public ResponseEntity<String> addBatch(@NonNull Batch batch){
 		return batchService.addBatch(batch);
 	}
 	
@@ -41,17 +42,17 @@ public class BatchController {
 	}
 	
 	@GetMapping("get/{bid}")
-	public ResponseEntity<Batch> getBatch(@PathVariable Integer bid){
+	public ResponseEntity<Batch> getBatch(@PathVariable @NonNull Integer bid){
 		return batchService.getBatch(bid);
 	}
 	
 	@PutMapping("update/{bid}")
-	public ResponseEntity<String> updateBatch(@PathVariable Integer bid,@RequestParam("updBatch") String batchName){
+	public ResponseEntity<String> updateBatch(@PathVariable @NonNull Integer bid,@RequestParam("updBatch") String batchName){
 		return batchService.updateBatch(bid,batchName);
 	}
 	
 	@DeleteMapping("delete/{bid}")
-	public ResponseEntity<Integer> deleteBatch(@PathVariable Integer bid){
+	public ResponseEntity<Integer> deleteBatch(@PathVariable @NonNull Integer bid){
 		return batchService.deleteBatch(bid);
 	}
 

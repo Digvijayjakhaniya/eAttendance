@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +32,7 @@ public class CourseController {
 	}
 
 	@PostMapping("add")
-	public ResponseEntity<String> addCourse(Course course) {
+	public ResponseEntity<String> addCourse(@NonNull Course course) {
 		return courseService.addCourse(course);
 	}
 	
@@ -41,18 +42,18 @@ public class CourseController {
 	}
 
 	@GetMapping("get/{cid}")
-	public ResponseEntity<Course> getCourse(@PathVariable Integer cid) {
+	public ResponseEntity<Course> getCourse(@PathVariable @NonNull Integer cid) {
 		return courseService.getCourse(cid);
 	}
 
 	@PutMapping("update/{id}")
-	public ResponseEntity<String> updateCourse(@PathVariable("id") Integer cid,
+	public ResponseEntity<String> updateCourse(@PathVariable("id") @NonNull Integer cid,
 			@RequestParam("updCourse") String courseName) {
 		return courseService.updateCourse(cid, courseName);
 	}
 
 	@DeleteMapping("delete/{cid}")
-	public ResponseEntity<Integer> deleteCourse(@PathVariable Integer cid) {
+	public ResponseEntity<Integer> deleteCourse(@PathVariable @NonNull Integer cid) {
 		return courseService.deleteCourse(cid);
 	}
 }

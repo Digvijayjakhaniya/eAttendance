@@ -1,12 +1,14 @@
 package com.attendance.system.service.impl;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.attendance.system.dao.SemesterDao;
@@ -20,7 +22,7 @@ public class SemesterServiceImpl implements SemesterService {
 	private SemesterDao dao;
 
 	@Override
-	public ResponseEntity<String> addSemester(Semester semester) {
+	public ResponseEntity<String> addSemester(@NonNull Semester semester) {
 		try {
 			dao.save(semester);
 			return new ResponseEntity<String>("<p class='text-success'>Semester Added Successfully</p>", HttpStatus.OK);
@@ -38,8 +40,9 @@ public class SemesterServiceImpl implements SemesterService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<Semester> getSemester(Integer sid) {
+	public ResponseEntity<Semester> getSemester(@NonNull Integer sid) {
 		try {
 			return new ResponseEntity<Semester>(dao.findById(sid).get(), HttpStatus.OK);
 		} catch (Exception e) {
@@ -47,8 +50,9 @@ public class SemesterServiceImpl implements SemesterService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<String> updateSemester(Integer sid, String semesterName) {
+	public ResponseEntity<String> updateSemester(@NonNull Integer sid, String semesterName) {
 		try {
 			Semester sem = new Semester(sid, semesterName);
 			Semester dbSem = dao.findById(sid).get();
@@ -65,7 +69,7 @@ public class SemesterServiceImpl implements SemesterService {
 	}
 
 	@Override
-	public ResponseEntity<Integer> deleteSemester(Integer sid) {
+	public ResponseEntity<Integer> deleteSemester(@NonNull Integer sid) {
 		try {
 			dao.deleteById(sid);
 			return new ResponseEntity<Integer>(1, HttpStatus.OK);

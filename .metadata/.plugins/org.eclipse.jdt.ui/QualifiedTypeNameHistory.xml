@@ -58,4 +58,5 @@
     <fullyQualifiedTypeName name="com.attendance.system.model.Batch"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="com.attendance.system.service.StudentService"/>
+    <fullyQualifiedTypeName name="com.attendance.system.service.QrService"/>
 </qualifiedTypeNameHistroy>

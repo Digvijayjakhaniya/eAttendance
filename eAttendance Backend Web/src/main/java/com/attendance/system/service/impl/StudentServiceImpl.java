@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.attendance.system.dao.StudentDao;
@@ -41,6 +42,7 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private UserService userService;
 
+	@SuppressWarnings("null")
 	@Override
 	public ResponseEntity<StudentWrapper> getAll() {
 		try {
@@ -83,8 +85,9 @@ public class StudentServiceImpl implements StudentService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<Mapping> isSession(Long sid) {
+	public ResponseEntity<Mapping> isSession(@NonNull Long sid) {
 		try {
 			Student student = studentDao.findById(sid).get();
 			String course_id = student.getStudentCourse().getCourseId().toString();
@@ -108,8 +111,9 @@ public class StudentServiceImpl implements StudentService {
 		}
 	}
 	
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<Student> getStudent(Long sid){
+	public ResponseEntity<Student> getStudent(@NonNull Long sid){
 		try {
 			return new ResponseEntity<Student>(studentDao.findById(sid).get(),HttpStatus.OK);	
 		}catch (Exception e) {

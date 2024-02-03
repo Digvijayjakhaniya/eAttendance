@@ -102,5 +102,14 @@
 			$("#side-dashbord").addClass("active")
 		});
 	</script>
+	
+	<script type="text/javascript">
+		window.addEventListener("load", () => {
+			if ("serviceWorker" in navigator) {
+			navigator.serviceWorker.register("service-worker.js");
+			}
+		});
+</script>
+
 </body>
 </html>

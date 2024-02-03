@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.attendance.system.dao.CourseDao;
@@ -20,7 +21,7 @@ public class CourseServiceImpl implements CourseService {
 	private CourseDao courseDao;
 
 	@Override
-	public ResponseEntity<String> addCourse(Course course) {
+	public ResponseEntity<String> addCourse(@NonNull Course course) {
 		try {
 			courseDao.save(course);
 			return new ResponseEntity<String>("<p class='text-success'>Faculty Added SuccessFully</p>", HttpStatus.OK);
@@ -39,8 +40,9 @@ public class CourseServiceImpl implements CourseService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<String> updateCourse(Integer cid, String courseName) {
+	public ResponseEntity<String> updateCourse(@NonNull Integer cid, String courseName) {
 		try {
 			Course course = new Course(cid, courseName);
 			Course dbCourse = courseDao.findById(cid).get();
@@ -57,8 +59,9 @@ public class CourseServiceImpl implements CourseService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public ResponseEntity<Course> getCourse(Integer cid) {
+	public ResponseEntity<Course> getCourse(@NonNull Integer cid) {
 		try {
 			return new ResponseEntity<Course>(courseDao.findById(cid).get(), HttpStatus.OK);
 		} catch (Exception e) {
@@ -67,7 +70,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public ResponseEntity<Integer> deleteCourse(Integer cid) {
+	public ResponseEntity<Integer> deleteCourse(@NonNull Integer cid) {
 		try {
 			courseDao.deleteById(cid);
 			return new ResponseEntity<Integer>(1, HttpStatus.OK);

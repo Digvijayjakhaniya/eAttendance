@@ -16,7 +16,8 @@ public class ApiExceptionHandler {
         return new ResponseEntity<ApiErrorResponse>(new ApiErrorResponse(ex.getMessage(),HttpStatus.UNAUTHORIZED),HttpStatus.UNAUTHORIZED);
     }
     
-    @ExceptionHandler(ApiException.class)
+    @SuppressWarnings("null")
+	@ExceptionHandler(ApiException.class)
     public ResponseEntity<ApiErrorResponse> handleApiException(ApiException ex) {
         return new ResponseEntity<>(ex.getErrorResponse(), ex.getErrorResponse().getStatus());
     }

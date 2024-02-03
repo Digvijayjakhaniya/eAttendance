@@ -108,7 +108,7 @@ public class WebSecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((requests) -> requests
 				.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-				.requestMatchers("/components/**","/css/**", "/img/**","/js/**","/vendor/**","/login","/login.jsp","error-404.jsp","error.jsp")
+				.requestMatchers("/components/**","/css/**", "/img/**","/js/**","/vendor/**","/login","/login.jsp","error-404.jsp","error.jsp","webmanifest.json","favicon.ico","/service-worker.js")
 				.permitAll()
 				.requestMatchers("/api/**").denyAll()
 				.anyRequest()

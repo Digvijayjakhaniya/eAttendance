@@ -7,9 +7,9 @@
 <head>
 
 
-<title>eAttendance | Manage Courses</title>
+<title>eAttendance | Error</title>
 
-<jsp:include page="components/head-imports.jsp"></jsp:include>
+<link href="css/sb-admin-2.min.css" rel="stylesheet" />
 
 </head>
 
@@ -34,7 +34,8 @@
                         <div class="error mx-auto" data-text="404">404</div>
                         <p class="lead text-gray-800 mb-5">Page Not Found</p>
                         <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
-                        <a href="/home">← Back to Dashboard</a>
+                        <br/><br/>
+                        <a class="btn btn-outline-primary" href="/home">← Back to Dashboard</a>
                     </div>
 
                 </div>
@@ -43,7 +44,16 @@
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<jsp:include page="components/footer.jsp"></jsp:include>
+				<footer class="sticky-footer bg-white mt-auto">
+			<div class="container my-auto">
+				<div class="copyright text-center my-auto" id="currentYear">
+				</div>
+			</div>
+			<script>
+				var copyrightElement = document.getElementById('currentYear');
+				copyrightElement.innerHTML = "Copyright &copy; eAttendance " + new Date().getFullYear();
+			</script>
+		</footer>
 			<!-- End of Footer -->
 		</div>
 		<!-- End of Content Wrapper -->
@@ -54,10 +64,8 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
-
-	<jsp:include page="components/models.jsp"></jsp:include>
-
-	<jsp:include page="components/js-imports.jsp"></jsp:include>
+	
+	<script src="js/sb-admin-2.min.js"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {

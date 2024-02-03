@@ -2,6 +2,7 @@ package com.attendance.system.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,13 +33,13 @@ public class MappingController {
 	}
 
 	@PostMapping("add")
-	public ResponseEntity<String> addMapping(Mapping mapping) {
+	public ResponseEntity<String> addMapping(@NonNull Mapping mapping) {
 		return mappingService.addMapping(mapping);
 
 	}
 
 	@DeleteMapping("delete/{mid}")
-	public ResponseEntity<Integer> deleteMapping(@PathVariable Integer mid) {
+	public ResponseEntity<Integer> deleteMapping(@PathVariable @NonNull Integer mid) {
 
 		return mappingService.deleteMapping(mid);
 
