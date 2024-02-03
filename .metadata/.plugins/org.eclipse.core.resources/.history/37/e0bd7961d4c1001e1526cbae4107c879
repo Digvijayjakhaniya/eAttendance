@@ -1,5 +1,0 @@
-package com.attendance.system.config.eventListeners;
-
-public class AuthenticationSuccessEventListener {
-
-}

@@ -1,8 +1,0 @@
-package com.attendance.system.enums;
-
-
-enum Role{
-	STUDENT,
-	FACULTY,
-	ADMIN
-}

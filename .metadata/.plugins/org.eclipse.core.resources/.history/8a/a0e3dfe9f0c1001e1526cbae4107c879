@@ -1,9 +1,0 @@
-package com.attendance.system.api.dtos;
-
-import java.util.Date;
-
-
-public interface AuthResponse {
-	final String TOKEN;
-	final Date EXPIRY;
-}

@@ -1,5 +1,0 @@
-package com.attendance.system.enums;
-
-public enum Role {
-	STUDENT, FACULTY, ADMIN
-}
