@@ -75,8 +75,8 @@ public class ApiAuthController {
 			}
 			AuthResponseStudent response = AuthResponseStudent.builder().email(user.getEmail())
 					.username(user.getUserName()).enrollment(user.getEnrollment()).token(token)
-					.expiry(jwtHelper.getExpirationDateFromToken(token)).batch(student.getStudentBatch().getBatchName())
-					.course(student.getStudentCourse().getCourseName()).division(student.getStudentDivision()).studentId(student.getStudentId()).build();
+					.expiry(jwtHelper.getExpirationDateFromToken(token)).batch(student.getStudentBatch())
+					.course(student.getStudentCourse()).division(student.getStudentDivision()).studentId(student.getStudentId()).build();
 			return ResponseEntity.ok(response);
 		}
 

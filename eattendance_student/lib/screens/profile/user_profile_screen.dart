@@ -25,7 +25,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
         const SizedBox(height: 10),
         Text(
-          authRepo.student.value!.studentName,
+          authRepo.student.value!.username,
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -38,27 +38,27 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           child: Divider(color: Colors.black12),
         ),
         InfoCard(
-          text: authRepo.student.value!.studentEnrollment,
+          text: authRepo.student.value!.enrollment,
           icon: Icons.email,
           onPressed: () async {},
         ),
         InfoCard(
-          text: authRepo.student.value!.studentEmail,
+          text: authRepo.student.value!.email,
           icon: Icons.email,
           onPressed: () async {},
         ),
         InfoCard(
-          text: authRepo.student.value!.studentBatch.batchName,
+          text: authRepo.student.value!.batch.batchName,
           icon: Icons.email,
           onPressed: () async {},
         ),
         InfoCard(
-          text: authRepo.student.value!.studentCourse.courseName,
+          text: authRepo.student.value!.course.courseName,
           icon: Icons.email,
           onPressed: () async {},
         ),
         InfoCard(
-          text: authRepo.student.value!.studentDivision,
+          text: authRepo.student.value!.division,
           icon: Icons.email,
           onPressed: () async {},
         ),

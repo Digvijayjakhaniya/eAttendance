@@ -1,11 +1,14 @@
+import 'package:eattendance_student/models/token_manager.dart';
+
 import '../../exceptions/auth_exceptions.dart';
+import '../../models/auth_request.dart';
 import '../../models/batch_model.dart';
 import '../../models/course_model.dart';
 import '../../utility/constants.dart';
-import 'package:http/http.dart' as http;
 import '../../models/student_model.dart';
 import '../../screens/authentication/login.dart';
 import '../../utility/utils.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,15 +30,15 @@ class AuthenticationRepository extends GetxController {
     if (isLoggedIn) {
       student.value = Student.fromJson(prefs.getString("student") ??
           Student(
-                  studentId: 0,
-                  studentEnrollment: 'studentEnrollment',
-                  studentName: 'studentName',
-                  studentEmail: 'studentEmail',
-                  studentDivision: 'studentDivision',
-                  studentPassword: 'studentPassword',
-                  studentCourse: Course(courseId: 0, courseName: 'courseName'),
-                  studentBatch: Batch(id: 0, batchName: 'batchName'))
-              .toJson());
+            studentId: 0,
+            enrollment: 'enrollment',
+            username: 'username',
+            email: 'email',
+            division: 'division',
+            course: Course(courseId: 0, courseName: 'courseName'),
+            batch: Batch(id: 0, batchName: 'batchName'),
+            token: 'token',
+          ).toJson());
     }
     // firebaseUser = Rx<User?>(_auth.currentUser);
     //firebaseUser.bindStream(_auth.userChanges());
@@ -85,14 +88,16 @@ class AuthenticationRepository extends GetxController {
   Future<void> loginUserWithNameEmailAndPassword(
       String email, String password) async {
     try {
-      final response =
-          await http.get(Uri.parse("$apiUrl/student/auth/$email/$password"));
+      final response = await http.post(Uri.parse("$apiUrl/auth/login"),
+          body: AuthRequest(username: email, password: password).toJson(),
+          headers: {'Content-Type': 'application/json'});
 
       if (response.statusCode == 200) {
         student = Rx<Student?>(Student.fromJson(response.body));
 
         await prefs.setBool("isLoggedIn", true);
         await prefs.setString("student", student.value!.toJson());
+        await TokenManager.saveToken(student.value!.token);
       }
       if (response.statusCode == 404) {
         throw SignUpWithEmailAndPasswordFailure.code("404");
