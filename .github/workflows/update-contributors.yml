@@ -1,0 +1,45 @@
+name: Update Contributors
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight
+  workflow_dispatch:  # Added for manual triggering
+
+jobs:
+  update-contributors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs');
+            const { Octokit } = require('@octokit/rest');
+
+            const octokit = new Octokit();
+            const repo = context.repo;
+
+            octokit.repos.listContributors({
+              owner: repo.owner,
+              repo: repo.repo
+            })
+            .then(response => {
+              const contributors = response.data.slice(0, 10).map(async contributor => {
+                const user = await octokit.users.get({ username: contributor.login });
+                const avatarUrl = user.data.avatar_url;
+                return `- [${contributor.login}](${contributor.html_url}) <img src="${avatarUrl}" width="40" height="40" alt="${contributor.login}'s avatar">`;
+              });
+
+              Promise.all(contributors)
+                .then(contributorList => {
+                  const readme = fs.readFileSync('README.md', 'utf8');
+                  const updatedReadme = readme.replace('{{ contributors }}', contributorList.join('\n'));
+                  fs.writeFileSync('README.md', updatedReadme);
+                })
+                .catch(error => console.error(error));
+            })
+            .catch(error => console.error(error));
+      - uses: EndBug/add-and-commit@v7
+        with:
+          add: README.md
+          message: Update Contributors
