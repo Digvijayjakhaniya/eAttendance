@@ -9,6 +9,6 @@ const endpoint = "/api/v1";
 
 // HOST URL
 const hosturl =
-    "https://46b2-2406-b400-d11-87eb-9800-6f0b-31fb-6cd0.ngrok-free.app";
+    "https://158f-2409-40c1-100f-eb6-1509-4dc8-6625-b7f5.ngrok-free.app";
 
 const String apiUrl = "$hosturl$endpoint";

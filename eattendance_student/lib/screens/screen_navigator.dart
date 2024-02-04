@@ -1,3 +1,5 @@
+import 'package:eattendance_student/screens/home/generate_Qr_code.dart';
+
 import '../screens/home/home_screen.dart';
 import '../screens/view_attendance/attendance_list.dart';
 import '../screens/profile/user_profile_screen.dart';
@@ -19,7 +21,7 @@ class _ScreenNavigatorState extends State<ScreenNavigator> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> currentScreen = [
-      const Home(),
+      const HomePage(),
       const AttendanceList(),
       const UserProfileScreen(),
     ];
