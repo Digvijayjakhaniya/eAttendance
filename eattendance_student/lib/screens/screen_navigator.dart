@@ -1,6 +1,5 @@
-import 'package:eattendance_student/screens/home/generate_Qr_code.dart';
+import '../screens/home/generate_Qr_code.dart';
 
-import '../screens/home/home_screen.dart';
 import '../screens/view_attendance/attendance_list.dart';
 import '../screens/profile/user_profile_screen.dart';
 import 'package:flutter/material.dart';
