@@ -37,7 +37,7 @@ Welcome to the eAttendance System repository! This system is designed to streaml
    - Run the project as a Spring Boot Application.
 
 3. **Flutter (Frontend):**
-   - Navigate to the `flutter_app` directory.
+   - Navigate to the `eattendance_student` directory.
    - Run `flutter pub get` to install dependencies.
    - Connect a device or use an emulator.
    - Run `flutter run` to launch the app.
