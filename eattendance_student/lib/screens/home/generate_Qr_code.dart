@@ -1,15 +1,13 @@
-import 'dart:developer';
-
-import 'package:eattendance_student/models/attendance_data.dart';
-import 'package:eattendance_student/models/mapping_model.dart';
-import 'package:eattendance_student/repository/session/session_repository.dart';
-import 'package:eattendance_student/utility/utils.dart';
+import '../../models/attendance_data.dart';
+import '../../models/mapping_model.dart';
+import '../../repository/session/session_repository.dart';
+import '../../utility/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -65,6 +63,11 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _overlayEntry.remove();
       overlayShown = false; // Reset the flag when overlay is removed
+      if (isAttendance) {
+        showSnackkBar(
+            icon: const Icon(Icons.done),
+            message: 'Attendance Filled SuccessFully');
+      }
     });
   }
 
@@ -99,59 +102,43 @@ class _HomePageState extends State<HomePage> {
                     if (!overlayShown &&
                         duration != null &&
                         duration!.isNotEmpty) {
-                          log('hello');
+                      Uri uri = Uri.parse(res);
 
-                        Uri uri = Uri.parse(res);
+                      Map<String, String> queryParameters = uri.queryParameters;
+                      AttendanceData data = AttendanceData(
+                          course: queryParameters['course']!.toString(),
+                          subject: queryParameters['subject']!.toString(),
+                          sem: queryParameters['sem']!.toString(),
+                          dividion: queryParameters['division']!.toString(),
+                          faculty: queryParameters['fid']!.toString(),
+                          duration: queryParameters['duration']!.toString(),
+                          createdAt: queryParameters['createdAt']!.toString());
 
-                        Map<String, String> queryParameters =uri.queryParameters;
-                        log(queryParameters.toString());
-                      AttendanceData data = AttendanceData(course: queryParameters['course']!.toString(),subject: queryParameters['subject']!.toString(),sem: queryParameters['sem']!.toString(),dividion: queryParameters['division']!.toString(),faculty: queryParameters['fid']!.toString(),duration: queryParameters['duration']!.toString(),createdAt: queryParameters['createdAt']!.toString());
-
-                        log(data.toString());
                       // Your action when the button is pressed
-                      Mapping? map = await sessinRepo.isSessionOpen();        
+                      Mapping? map = await sessinRepo.isSessionOpen();
 
                       if (map != null) {
                         showSnackkBar(
                             icon: const Icon(Icons.done),
                             message: 'Session is Active Filling Attendance');
-                        isAttendance = await sessinRepo.fillAttendance(map,data);
-                        if (isAttendance) {
-                          showSnackkBar(
-                              icon: const Icon(Icons.done),
-                              message: 'Attendance Filled SuccessFully');
-                        }
+                        isAttendance =
+                            await sessinRepo.fillAttendance(map, data);
                       } else {
                         showSnackkBar(
                           icon: const Icon(Icons.not_interested),
-                          message:
-                              'Session Is Not Active Please Try again When Session is Active',
+                          message: 'Opps! You Are Out Of Time',
                         );
                       }
                       showOverlay(); // Show loading overlay if not shown before
                     } else {
-                       showSnackkBar(
-                          icon: const Icon(Icons.not_interested),
-                          message:
-                              'Invalid Qr Code',
-                        );
+                      showSnackkBar(
+                        icon: const Icon(Icons.not_interested),
+                        message: 'Invalid Qr Code',
+                      );
                     }
                   },
                   child: const Text('Open Scanner'),
                 ),
-                if (queryParameters.isNotEmpty)
-                  Column(
-                    children: [
-                      Text('Barcode Result: $result'),
-                      Text('Course: ${queryParameters['course']}'),
-                      Text('Subject: ${queryParameters['subject']}'),
-                      Text('Semester: ${queryParameters['sem']}'),
-                      Text('Division: ${queryParameters['division']}'),
-                      Text('Faculty ID: ${queryParameters['fid']}'),
-                      Text('Duration: $duration'), // Display duration
-                      Text('Created At: ${queryParameters['createdAt']}'),
-                    ],
-                  ),
               ],
             ),
           ),

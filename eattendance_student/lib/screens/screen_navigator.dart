@@ -1,4 +1,4 @@
-import '../screens/home/generate_Qr_code.dart';
+import 'home/generate_qr_code.dart';
 
 import '../screens/view_attendance/attendance_list.dart';
 import '../screens/profile/user_profile_screen.dart';

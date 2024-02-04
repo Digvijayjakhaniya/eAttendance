@@ -105,7 +105,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 			
 	        long minutesDifference = Math.abs(now.until(createdAt, java.time.temporal.ChronoUnit.MINUTES));
 	        
-	        if(Long.parseLong(request.getDuration()) > minutesDifference) {
+	        if(Long.parseLong(request.getDuration()) < minutesDifference) {
 	        	throw new Exception("Qr Expired, Please Try Again");
 	        }
 	        

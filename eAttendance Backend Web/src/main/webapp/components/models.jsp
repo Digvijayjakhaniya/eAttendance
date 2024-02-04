@@ -53,12 +53,13 @@
 					<div class="form-group">
 						<input type="password" class="form-control form-control-user"
 							id=updFacPass name="updFacPass"
-							placeholder="Temporary Password" required />
+							placeholder="Temporary Password" />
 					</div>
 					<input type="hidden" id="hdnFid" />
 					<div class="mt-2 mb-2" id="updFacRes">
 						<!-- Response -->
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-primary btn-user btn-block">Update
 						Faculty</button>
 				</form>
@@ -94,6 +95,7 @@
 					<div class="mt-2 mb-2" id="updCourseRes">
 						<!-- Response -->
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-primary btn-user btn-block">Update
 						Course</button>
 				</form>
@@ -129,6 +131,7 @@
 					<div class="mt-2 mb-2" id="updSubjectRes">
 						<!-- Response -->
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-primary btn-user btn-block">Update
 						Subject</button>
 				</form>
@@ -147,6 +150,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<h5 class="modal-title" id="exampleModalLabel">Update Semester</h5>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
@@ -164,6 +168,7 @@
 					<div class="mt-2 mb-2" id="updSemRes">
 						<!-- Response -->
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-primary btn-user btn-block">Update
 						Semester</button>
 				</form>
@@ -197,6 +202,7 @@
 						<div class="mt-2 mb-2" id="updMappingRes">
 							<!-- Response -->
 						</div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<button type="submit" class="btn btn-primary btn-user btn-block">Update
 							Mapping</button>
 					</form>
@@ -232,6 +238,7 @@
 					<div class="mt-2 mb-2" id="updBatchRes">
 						<!-- Response -->
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<button type="submit" class="btn btn-primary btn-user btn-block">Update
 						Batch</button>
 				</form>
