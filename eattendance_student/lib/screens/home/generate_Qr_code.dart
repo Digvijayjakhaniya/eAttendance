@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   String? createdAt;
   DateTime now1 = DateTime.now();
 
-  bool overlayShown = false; // Track if overlay has been shown
+  bool overlayShown = false; 
 
   @override
   void initState() {
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   void removeOverlay() {
     setState(() {
       _overlayEntry.remove();
-      overlayShown = false; // Reset the flag when overlay is removed
+      overlayShown = false;
       if (isAttendance) {
         showSnackkBar(
             icon: const Icon(Icons.done),
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                           duration: queryParameters['duration']!.toString(),
                           createdAt: queryParameters['createdAt']!.toString());
 
-                      // Your action when the button is pressed
+
                       Mapping? map = await sessinRepo.isSessionOpen();
 
                       if (map != null) {
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                           message: 'Opps! You Are Out Of Time',
                         );
                       }
-                      showOverlay(); // Show loading overlay if not shown before
+                      showOverlay();
                     } else {
                       showSnackkBar(
                         icon: const Icon(Icons.not_interested),
@@ -144,18 +144,37 @@ class _HomePageState extends State<HomePage> {
           ),
           _showBuffer
               ? _overlayEntry as Widget
-              : const SizedBox(), // Use ternary operator
+              : const SizedBox(), 
         ],
       ),
     );
   }
+void showOverlay() {
+ 
+  DateTime createdAtTime = DateTime.parse("2022-01-01 $createdAt");
 
-  void showOverlay() {
-    Overlay.of(context).insert(_overlayEntry);
-    Future.delayed(Duration(minutes: int.tryParse(duration ?? '0') ?? 0), () {
-      removeOverlay();
-    });
+  int durationInMinutes = int.tryParse(duration ?? '0') ?? 0;
 
-    overlayShown = true;
-  }
+  
+  DateTime endTime = createdAtTime.add(Duration(minutes: durationInMinutes));
+
+
+
+  Overlay.of(context).insert(_overlayEntry);
+  DateTime currentTime = DateTime.now();
+  
+  Duration difference = endTime.difference(currentTime);
+
+  int remainingSeconds = difference.inSeconds % 60;
+
+  
+ 
+  Future.delayed(Duration(seconds: remainingSeconds-1), () {
+    removeOverlay();
+  });
+
+  overlayShown = true;
+}
+
+
 }
