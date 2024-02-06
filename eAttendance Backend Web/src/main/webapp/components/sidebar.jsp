@@ -1,10 +1,11 @@
 <%@page import="com.attendance.system.model.SiteUser"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<sec:authorize access="isAuthenticated()">
 <%
 SiteUser user = (SiteUser) pageContext.getRequest().getAttribute("siteUser");
 %>
-<sec:authorize access="isAuthenticated()">
+
 	<sec:authorize access="hasAnyRole('ADMIN','FACULTY')">
 		<!-- Sidebar -->
 		<ul
