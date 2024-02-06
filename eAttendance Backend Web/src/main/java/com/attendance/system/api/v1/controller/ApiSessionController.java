@@ -1,7 +1,6 @@
 package com.attendance.system.api.v1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;

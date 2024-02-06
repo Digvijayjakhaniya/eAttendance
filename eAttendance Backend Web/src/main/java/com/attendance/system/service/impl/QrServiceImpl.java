@@ -1,7 +1,10 @@
 package com.attendance.system.service.impl;
 
-import org.slf4j.Logger;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -15,10 +18,6 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Base64;
 
 @Service
 public class QrServiceImpl implements QrService {

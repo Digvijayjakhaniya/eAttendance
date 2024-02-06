@@ -20,6 +20,8 @@ public interface StudentService {
 
 	ResponseEntity<List<String>> getDivisons();
 
+	ResponseEntity<Student> updateStudent(Student user);
+
 	ResponseEntity<Mapping> isSession(@NonNull Long sid);
 
 	ResponseEntity<Student> getStudent(@NonNull Long sid);

@@ -1,11 +1,11 @@
 /* Faculty Operations */
 
-const successRes = function(data){
-	return "<p class='text-success'>"+data+"</p>";
+const successRes = function(data) {
+	return "<p class='text-success'>" + data + "</p>";
 }
 
-const errorRes = function(data){
-	return "<p class='text-danger'>"+data+"</p>";
+const errorRes = function(data) {
+	return "<p class='text-danger'>" + data + "</p>";
 }
 
 //addFaculty
@@ -393,18 +393,18 @@ $(document).on("click", ".delMapping", function() {
 
 /* Batch Operations */
 //add Batch
-$("#addBatch").on("submit",function(e){
+$("#addBatch").on("submit", function(e) {
 	e.preventDefault();
 	$.ajax({
-		url:"batch/add",
-		type:"POST",
-		data:$(this).serialize(),
-		statusCode:{
-			200:function(){
+		url: "batch/add",
+		type: "POST",
+		data: $(this).serialize(),
+		statusCode: {
+			200: function() {
 				$("#addBatch").trigger("reset");
 			}
 		},
-		success:function(data){
+		success: function(data) {
 			$("#batchResponce").hide();
 			$("#batchResponce").html(successRes(data));
 			$("#batchResponce").fadeIn("slow");
@@ -432,14 +432,14 @@ $(document).on("click", ".updBatch", function() {
 });
 
 // Update Batch
-$("#editBatchForm").on("submit",function(e){
-	let bid=$("#hdnBid").val();
+$("#editBatchForm").on("submit", function(e) {
+	let bid = $("#hdnBid").val();
 	e.preventDefault();
 	$.ajax({
-		url:"batch/update/"+bid,
-		type:"PUT",
-		data:$(this).serialize(),
-		success:function(data){
+		url: "batch/update/" + bid,
+		type: "PUT",
+		data: $(this).serialize(),
+		success: function(data) {
 			$("#updBatchRes").hide();
 			$("#updBatchRes").html(successRes(data));
 			$("#updBatchRes").fadeIn("slow");
@@ -475,21 +475,62 @@ $(document).on("click", ".delBatch", function() {
 	});
 });
 
-$("#addStudent").on("submit",function(e){
+/* Student Operations */
+
+//addStudent
+$("#addStudent").on("submit", function(e) {
 	e.preventDefault();
 	$.ajax({
-		url:"student/add",
-		type:"POST",
-		data:$(this).serialize(),
-		statusCode:{
-			200:function(){
+		url: "student/add",
+		type: "POST",
+		data: $(this).serialize(),
+		statusCode: {
+			200: function() {
 				$("#addStudent").trigger("reset");
 			}
 		},
-		success:function(data){
+		success: function(data) {
 			$("#studentResponse").hide();
 			$("#studentResponse").html(successRes(data));
 			$("#studentResponse").fadeIn("slow");
 		}
 	});
+});
+
+
+$(document).on("click", ".updStudent", function() {
+	let sid = $(this).data("sid");
+	$.ajax({
+		url: "student/getStudent/" + sid,
+		type: "GET",
+		success: function(data) {
+			$("#updStuId").val(data.studentId);
+			$("#updStuEnroll").val(data.user.enrollment);
+			$("#updUserId").val(data.user.userId);
+			$("#updStuName").val(data.user.userName);
+			$("#updStuEmail").val(data.user.email);
+			$("#updStuDivision").val(data.studentDivision);
+			$('#updStuBatch  option[value="'+data.studentBatch.id+'"]').attr("selected",true);
+			$('#updStuCourse  option[value="'+data.studentCourse.courseId+'"]').attr("selected",true);
+		}
+	});
+});
+
+
+// updates Student Data
+$("#editStudentForm").on("submit", function(e) {
+	e.preventDefault();
+	$.ajax({
+		url: "student/updateStudent",
+		type: "PUT",
+		data: $(this).serialize(),
+		success: function(data) {
+			$("#updStuRes").hide();
+			$("#updStuRes").html(successRes(data));
+			$("#updStuRes").fadeIn("slow");
+		},
+		error:function(data){
+			console.log(data);
+		}
+	})
 });
