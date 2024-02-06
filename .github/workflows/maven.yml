@@ -40,7 +40,6 @@ jobs:
         image: smit814/e_attendance
         tags: v0.1.0, latest
         registry: docker.io
-        dockerfile: Dockerfile
-        context: 'eAttendance Backend Web'
+        dockerfile: ./eAttendance\ Backend\ Web/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
