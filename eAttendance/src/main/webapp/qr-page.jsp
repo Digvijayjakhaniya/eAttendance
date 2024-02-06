@@ -62,7 +62,7 @@ String duration= (String) request.getAttribute("duration");
 		}, 600000); // 600,000 milliseconds = 10 minutes
 		
 		function redirect() {
-			window.location.replace("http://localhost:8080/");
+			window.location.replace("https://eattendance-zfk0.onrender.com/");
 		}
 		
 		// Update the timer every second
