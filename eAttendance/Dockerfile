@@ -5,7 +5,7 @@ FROM openjdk:17
 WORKDIR /app
 
 # Copy the packaged JAR file into the container
-COPY target/e_attendance.jar /app/e_attendance.jar
+COPY ./target/e_attendance.jar /app/e_attendance.jar
 
 # Copy the entire project directory into the container
 COPY . /app
