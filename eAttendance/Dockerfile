@@ -19,4 +19,4 @@ ENV SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
 ENV SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
 
 # Specify the command to run on container start
-CMD ["java", "-jar", "topayall.jar"]
+CMD ["java", "-jar", "e_attendance.jar"]
