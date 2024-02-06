@@ -33,13 +33,13 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -f eAttendance\ Backend\ Web clean install
+      run: mvn -f eAttendance clean install
     - name: Build & push Docker image
       uses: mr-smithers-excellent/docker-build-push@v6.3
       with:
         image: smit814/e_attendance
         tags: v0.1.0, latest
         registry: docker.io
-        dockerfile: '.\eAttendance Backend Web\Dockerfile'
+        dockerfile: './eAttendance/Dockerfile'
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
