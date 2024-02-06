@@ -123,6 +123,7 @@
 												<th>Student Division</th>
 												<th>Student Course</th>
 												<th>Student Batch</th>
+												<th>Edit</th>
 												<th>Delete</th>
 											</tr>
 										</thead>
@@ -135,6 +136,7 @@
 												<th>Student Division</th>
 												<th>Student Course</th>
 												<th>Student Batch</th>
+												<th>Edit</th>
 												<th>Delete</th>
 											</tr>
 										</tfoot>
@@ -152,6 +154,13 @@
 												<td><%=student.getStudentCourse().getCourseName()%></td>
 												<td><%=student.getStudentBatch().getBatchName()%></td>
 												<td><button type="button"
+														class="btn btn-warning updStudent"
+														data-sid="<%=student.getStudentId()%>" data-toggle="modal"
+														data-target="#editStudent">
+														<i class="fas fa-edit"></i>
+													</button></td>
+												<td><button type="button"
+														class="btn btn-danger delStudent"
 														class="btn btn-danger updStudent"
 														data-sid="<%=student.getStudentId()%>">
 														<i class="fas fa-trash"></i>
@@ -182,6 +191,86 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
+
+	<!-- Student Model -->
+	<div class="modal fade" id="editStudent" tabindex="-1" role="dialog"
+		aria-labelledby="editStudent" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Update Student</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="editStudentBody">
+					<form class="user" id="editStudentForm">
+
+						<input type="hidden" id="updStuId" name="updStuId" />
+						<input type="hidden" id="updUserId" name="updUserId" />
+
+						<div class="form-group">
+							<input type="text" class="form-control form-control-user"
+								id="updStuEnroll" name="updStuEnroll"
+								placeholder="Enter student Enrollment Id" required />
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control form-control-user"
+								id="updStuName" name="updStuName"
+								placeholder="Enter Student Name" required />
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control form-control-user"
+								id="updStuEmail" name="updStuEmail"
+								placeholder="Enter student Email Id" required />
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control form-control-user"
+								id=updStuDivision name="updStuDivision"
+								placeholder="Enter student Division" required />
+						</div>
+
+						<div class="form-group">
+							<select name="updStuCourse" id="updStuCourse"
+								class="form-control custom-select" required>
+								<%
+								for (Course course : courses) {
+								%>
+								<option value="<%=course.getCourseId()%>"><%=course.getCourseName()%></option>
+								<%
+								}
+								%>
+							</select>
+						</div>
+						<div class="form-group">
+							<select name="updStuBatch" id="updStuBatch"
+								class="form-control custom-select" required>
+								<%
+								for (Batch batch : batchs) {
+								%>
+								<option value="<%=batch.getId()%>"><%=batch.getBatchName()%></option>
+								<%
+								}
+								%>
+							</select>
+						</div>
+						<div class="mt-2 mb-2" id="updStuRes">
+							<!-- Response -->
+						</div>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+						<button type="submit" class="btn btn-primary btn-user btn-block">Update
+							Student</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<jsp:include page="components/models.jsp"></jsp:include>
 

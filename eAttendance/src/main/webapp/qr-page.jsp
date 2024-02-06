@@ -90,8 +90,5 @@ String duration= (String) request.getAttribute("duration");
 	});
 	
 </script>
-	
-
 </body>
-
 </html>

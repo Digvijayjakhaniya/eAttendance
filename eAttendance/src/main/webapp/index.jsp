@@ -72,6 +72,7 @@
 							</div>
 						</div>
 					</div>
+
 					<!-- Content Row -->
 
 					<div class="row">
@@ -120,6 +121,7 @@
 			navigator.serviceWorker.register("service-worker.js");
 			}
 		});
+
 	</script>
 	
 		<script>

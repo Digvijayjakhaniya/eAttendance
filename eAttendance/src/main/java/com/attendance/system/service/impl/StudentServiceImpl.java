@@ -3,6 +3,8 @@ package com.attendance.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -127,4 +129,24 @@ public class StudentServiceImpl implements StudentService {
 		return ResponseEntity.ok(studentDao.findByUser(user));
 	}
 
+
+	@Override
+	public ResponseEntity<Student> updateStudent(Student student) {
+		userService.updateUser(student.getUser());
+		Student oldStudent=studentDao.findById(student.getStudentId()).get();
+		
+		if(Objects.nonNull(student.getStudentDivision()) && !"".equalsIgnoreCase(student.getStudentDivision())) {
+			oldStudent.setStudentDivision(student.getStudentDivision());
+		}
+		
+		if(Objects.nonNull(student.getStudentBatch())) {
+			oldStudent.setStudentBatch(student.getStudentBatch());
+		}
+		
+		if(Objects.nonNull(student.getStudentCourse())) {
+			oldStudent.setStudentCourse(student.getStudentCourse());
+		}
+		
+	  return ResponseEntity.ok(studentDao.save(oldStudent));
+	}
 }

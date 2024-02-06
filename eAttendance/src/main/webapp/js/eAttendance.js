@@ -393,6 +393,7 @@ $(document).on("click", ".delMapping", function() {
 
 /* Batch Operations */
 //add Batch
+
 $("#addBatch").on("submit",function(e){
 	e.preventDefault();
 	$.ajax({
@@ -432,6 +433,7 @@ $(document).on("click", ".updBatch", function() {
 });
 
 // Update Batch
+
 $("#editBatchForm").on("submit",function(e){
 	let bid=$("#hdnBid").val();
 	e.preventDefault();
@@ -475,6 +477,8 @@ $(document).on("click", ".delBatch", function() {
 	});
 });
 
+/* Student Operations */
+//addStudent
 $("#addStudent").on("submit",function(e){
 	e.preventDefault();
 	$.ajax({
@@ -490,6 +494,44 @@ $("#addStudent").on("submit",function(e){
 			$("#studentResponse").hide();
 			$("#studentResponse").html(successRes(data));
 			$("#studentResponse").fadeIn("slow");
+		}
+	});
+});
+
+// load update Student Model
+$(document).on("click", ".updStudent", function() {
+	let sid = $(this).data("sid");
+	$.ajax({
+		url: "student/getStudent/" + sid,
+		type: "GET",
+		success: function(data) {
+			$("#updStuId").val(data.studentId);
+			$("#updStuEnroll").val(data.user.enrollment);
+			$("#updUserId").val(data.user.userId);
+			$("#updStuName").val(data.user.userName);
+			$("#updStuEmail").val(data.user.email);
+			$("#updStuDivision").val(data.studentDivision);
+			$('#updStuBatch  option[value="'+data.studentBatch.id+'"]').attr("selected",true);
+			$('#updStuCourse  option[value="'+data.studentCourse.courseId+'"]').attr("selected",true);
+		}
+	});
+});
+
+
+// updates Student Data
+$("#editStudentForm").on("submit", function(e) {
+	e.preventDefault();
+	$.ajax({
+		url: "student/updateStudent",
+		type: "PUT",
+		data: $(this).serialize(),
+		success: function(data) {
+			$("#updStuRes").hide();
+			$("#updStuRes").html(successRes(data));
+			$("#updStuRes").fadeIn("slow");
+		},
+		error:function(data){
+			console.log(data);
 		}
 	});
 });
