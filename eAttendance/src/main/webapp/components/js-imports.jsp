@@ -19,4 +19,9 @@
 <!-- iQuery Confirm -->
 <script src="vendor/jquery/jquery-confirm.js"></script>
 <!-- Custom Js -->
+
 <script src="js/eAttendance.js"></script>
+
+<!-- Apex Charts -->
+<script src="vendor/apexcharts/dist/apexcharts.min.js" ></script>
+

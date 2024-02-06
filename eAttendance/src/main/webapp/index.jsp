@@ -74,6 +74,18 @@
 					</div>
 
 					<!-- Content Row -->
+
+					<div class="row">
+						<div class="col-lg">
+							<div class="card">
+								<div class="card-body">
+									<h3 class="card-title">Statistics</h3>
+									<div id="chart-mentions" class="chart-lg"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 				<!-- /.container-fluid -->
 			</div>
@@ -91,7 +103,7 @@
 	<a class="scroll-to-top rounded" href="#page-top"> <i
 		class="fas fa-angle-up"></i>
 	</a>
-	
+
 	<!-- Models -->
 	<jsp:include page="components/models.jsp"></jsp:include>
 
@@ -102,13 +114,134 @@
 			$("#side-dashbord").addClass("active")
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		window.addEventListener("load", () => {
 			if ("serviceWorker" in navigator) {
 			navigator.serviceWorker.register("service-worker.js");
 			}
 		});
+
+	</script>
+	
+		<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        window.ApexCharts && (new ApexCharts(document.getElementById('chart-mentions'), {
+            chart: {
+                type:"line",
+                fontFamily: 'inherit',
+                height: 350,
+                parentHeightOffset: 0,
+                toolbar: {
+                    show: true,
+                },
+                animations: {
+                    enabled: true
+                },
+                stacked: false,
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '80%',
+                }
+            },
+            stroke: {
+                width: [2, 0, 2, 0]
+             },
+            dataLabels: {
+                enabled: false,
+            },
+            fill: {
+                opacity: 1,
+            },
+            series: [
+            {
+                name: "A",
+                type: "column",
+                data: [30,20,30,10]
+            },
+            {
+                name: "B",
+                type: "column",
+                data: [18,30,40,20]
+            },
+            {
+                name: "C",
+                type: "column",
+                data: [19,20,30,50]
+            },
+            {
+                name: "D",
+                type: "column",
+                data: [8,20,30,40]
+            }
+            ],
+            tooltip: {
+                fixed: {
+                  enabled: true,
+                  position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
+                  offsetY: 30,
+                  offsetX: 60
+                },
+             },
+            grid: {
+                padding: {
+                    top: 0,
+                    right: 0,
+                    left: 70,
+                    bottom: 0
+                },
+                strokeDashArray: 4,
+                xaxis: {
+                    lines: {
+                        show: true
+                    }
+                },
+            },
+            xaxis: {
+            	labels: {
+                    padding: 0, 
+                },
+                tooltip: {
+                    enabled: false
+                },
+                axisBorder: {
+                    show: true,
+                },
+           	 	title: {
+           	        text: 'Divisions',
+           	        offsetX: 0,
+           	        offsetY: 0,
+           	        style: {
+           	            fontSize: '12px',
+           	        },
+           	    },
+            },
+            yaxis: {
+                labels: {
+                    show: true,
+                    align: 'right', // Align y-axis labels to the right for better readability
+                },
+                title: {
+                    text: 'Attendance',
+                    rotate: -90,
+                    offsetX: 0,
+                    offsetY: 0,
+                    style: {
+                        fontSize: '12px',
+                    },
+                },
+            },
+            labels: ['SAM-1','SAM-2','SAM-3','SAM-4','SAM-5','SAM-6','SAM-7'],
+            colors: ['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800'],
+            legend: {
+                show: true,
+                position: 'bottom', // Change the legend position (top, right, bottom, left)
+                horizontalAlign: 'center', // Align legend items horizontally
+                fontSize: '14px',
+            },
+        })).render();
+    });
 </script>
 
 </body>

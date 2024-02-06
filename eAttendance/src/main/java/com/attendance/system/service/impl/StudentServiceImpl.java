@@ -2,6 +2,7 @@ package com.attendance.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +128,7 @@ public class StudentServiceImpl implements StudentService {
 	public ResponseEntity<Student> getStudent(SiteUser user) {
 		return ResponseEntity.ok(studentDao.findByUser(user));
 	}
+
 
 	@Override
 	public ResponseEntity<Student> updateStudent(Student student) {

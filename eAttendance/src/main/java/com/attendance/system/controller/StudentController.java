@@ -8,7 +8,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +32,10 @@ public class StudentController {
 
 	@Autowired
 	private StudentService studentService;
-
+	
+	@Autowired
+	private StudentService studentService;
+	
 	@RequestMapping
 	public ModelAndView student() {
 		return new ModelAndView("student").addObject("studentWrapper", studentService.getAll().getBody());

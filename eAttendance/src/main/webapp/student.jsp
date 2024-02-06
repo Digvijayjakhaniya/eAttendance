@@ -56,8 +56,8 @@
 									</div>
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user"
-											id="email" name="email" placeholder="Enter Student Email"
-											required />
+											id="email" name="email"
+											placeholder="Enter Student Email" required />
 									</div>
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user"
@@ -97,8 +97,7 @@
 											%>
 										</select>
 									</div>
-									<input type="hidden" name="${_csrf.parameterName}"
-										value="${_csrf.token}" />
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<div class="mt-2 mb-2" id="studentResponse"></div>
 									<button type="submit"
 										class="btn btn-primary btn-user btn-block">Add
@@ -162,6 +161,7 @@
 													</button></td>
 												<td><button type="button"
 														class="btn btn-danger delStudent"
+														class="btn btn-danger updStudent"
 														data-sid="<%=student.getStudentId()%>">
 														<i class="fas fa-trash"></i>
 													</button></td>
@@ -271,7 +271,6 @@
 			</div>
 		</div>
 	</div>
-
 
 	<jsp:include page="components/models.jsp"></jsp:include>
 
