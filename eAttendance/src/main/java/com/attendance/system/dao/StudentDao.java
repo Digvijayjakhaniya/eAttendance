@@ -11,7 +11,7 @@ import com.attendance.system.model.SiteUser;
 
 public interface StudentDao extends JpaRepository<Student, Long>{
 
-	@Query(value="SELECT DISTINCT student_division FROM STUDENT",nativeQuery=true)
+	@Query(value="SELECT DISTINCT student_division FROM student",nativeQuery=true)
 	List<String> getDivisons();
 	
 	Student findByUser(SiteUser user);
