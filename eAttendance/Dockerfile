@@ -8,7 +8,7 @@ WORKDIR /app
 COPY ./eAttendance/target/e_attendance.jar /app/e_attendance.jar
 
 # Copy the entire project directory into the container
-COPY . /app
+COPY ./eAttendance /app
 
 # Expose the port the app runs on
 EXPOSE 8080
