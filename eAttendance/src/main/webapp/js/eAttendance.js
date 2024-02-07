@@ -531,7 +531,36 @@ $("#editStudentForm").on("submit", function(e) {
 			$("#updStuRes").fadeIn("slow");
 		},
 		error:function(data){
-			console.log(data);
+			// console.log(data);
+			$("#updStuRes").html(errorRes(data));
+		}
+	});
+});
+
+// Delete Student
+$(document).on("click", ".delStudent", function() {
+	let sid = $(this).data("sid");
+	let element = this;
+	$.confirm({
+		title: '<p><small>Do yo Really Want To Delete?</small>',
+		buttons: {
+			confirm: function() {
+				$.ajax({
+					url: "student/delete/" + sid,
+					type: "DELETE",
+					success: function(data) {
+						if (data == 1) {
+							$.alert('student Deleted SuccessFully');
+							$(element).closest("tr").fadeOut();
+						} else {
+							$.alert("Internal Error Can't Delete Student");
+						}
+					}
+				});
+			},
+			cancel: function() {
+				$.alert('Operation Aborted!');
+			}
 		}
 	});
 });

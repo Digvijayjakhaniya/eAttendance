@@ -14,6 +14,9 @@ import com.attendance.system.enums.Role;
 import com.attendance.system.model.Course;
 import com.attendance.system.model.Mapping;
 import com.attendance.system.model.MappingWrapper;
+import com.attendance.system.model.Semester;
+import com.attendance.system.model.SiteUser;
+import com.attendance.system.model.Subject;
 import com.attendance.system.service.CourseService;
 import com.attendance.system.service.MappingService;
 import com.attendance.system.service.SemesterService;
@@ -83,7 +86,54 @@ public class MappingServiceImpl implements MappingService {
 	}
 
 	@Override
-	public List<Mapping> getMappingsFor(Course course) {
-		return mappingDao.findByCourse(course);
+	public ResponseEntity<List<Mapping>> getMappingsFor(Course course) {
+		return ResponseEntity.ok(mappingDao.findByCourse(course));
 	}
+
+	@Override
+	public ResponseEntity<List<Mapping>> getMappings(Course course) {
+		return ResponseEntity.ok(mappingDao.findByCourse(course));
+	}
+
+	@Override
+	public ResponseEntity<List<Mapping>> getMappings(Subject subject) {
+		return ResponseEntity.ok(mappingDao.findBySubject(subject));
+	}
+
+	@Override
+	public ResponseEntity<List<Mapping>> getMappings(Semester semester) {
+		return ResponseEntity.ok(mappingDao.findBySemester(semester));
+	}
+
+	@Override
+	public ResponseEntity<List<Mapping>> getMappings(SiteUser faculty) {
+		return ResponseEntity.ok(mappingDao.findByFaculty(faculty));
+	}
+
+	@Override
+	public ResponseEntity<List<Mapping>> getMappings(Course course, Semester semester, Subject subject) {
+		return ResponseEntity.ok(mappingDao.findByCourseAndSemesterAndSubject(course, semester, subject));
+	}
+
+	@Override
+	public ResponseEntity<List<Mapping>> getMappings(Course course, Semester semester, SiteUser faculty) {
+		return ResponseEntity.ok(mappingDao.findByCourseAndSemesterAndFaculty(course, semester, faculty));
+	}
+
+	@Override
+	public ResponseEntity<List<Mapping>> getMappings(Course course, Semester semester, Subject subject,
+			SiteUser faculty) {
+		return ResponseEntity.ok(mappingDao.findByCourseAndSemesterAndSubjectAndFaculty(course, semester, subject, faculty));
+	}
+
+	@Override
+	public ResponseEntity<List<Course>> getCourses() {
+		return ResponseEntity.ok(mappingDao.findAllCourses());
+	}
+
+	@Override
+	public ResponseEntity<List<Semester>> getSemerters(Course course) {
+	return ResponseEntity.ok(mappingDao.findAllSemesters(course));
+	}
+		
 }

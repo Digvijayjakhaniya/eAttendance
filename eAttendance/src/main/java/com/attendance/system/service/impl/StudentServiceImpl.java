@@ -2,7 +2,6 @@ package com.attendance.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +93,7 @@ public class StudentServiceImpl implements StudentService {
 			Student student = studentDao.findById(sid).get();
 			String course_id = student.getStudentCourse().getCourseId().toString();
 			String division = student.getStudentDivision();
-			List<Mapping> mappings = mappingService.getMappingsFor(courseService.getCourse(Integer.parseInt(course_id)).getBody());
+			List<Mapping> mappings = mappingService.getMappingsFor(courseService.getCourse(Integer.parseInt(course_id)).getBody()).getBody();
 //			return new ResponseEntity<Mapping>(mappings.get(0),HttpStatus.OK);
 			for (Mapping mapping : mappings) {
 				String facultyId = mapping.getFaculty().getUserId().toString();
@@ -130,9 +129,11 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 
+	@SuppressWarnings("null")
 	@Override
 	public ResponseEntity<Student> updateStudent(Student student) {
 		userService.updateUser(student.getUser());
+		
 		Student oldStudent=studentDao.findById(student.getStudentId()).get();
 		
 		if(Objects.nonNull(student.getStudentDivision()) && !"".equalsIgnoreCase(student.getStudentDivision())) {
@@ -148,5 +149,16 @@ public class StudentServiceImpl implements StudentService {
 		}
 		
 	  return ResponseEntity.ok(studentDao.save(oldStudent));
+	}
+
+	@SuppressWarnings("null")
+	@Override
+	public ResponseEntity<Boolean> deleteStudent(Long sid) {
+		Student student = studentDao.findById(sid).get();
+		if(userService.deleteUser(student.getUser()).getBody()) {
+			studentDao.delete(student);
+			return ResponseEntity.ok(true);
+		}
+		return ResponseEntity.ok(false);
 	}
 }

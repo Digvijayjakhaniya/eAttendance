@@ -1,5 +1,10 @@
+<%@page import="com.attendance.system.model.Course"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+List<Course> courses = (List<Course>) request.getAttribute("courses");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,27 +35,45 @@
 						<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 					</div>
 
-					<!-- Content Row -->
-					<div class="row">
-						<!-- Earnings (Monthly) Card Example -->
-						<div class="col-xl-3 col-md-6 mb-4">
-							<div class="card border-left-primary shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div
-												class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-												Students Present (Today)</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">
-												200</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-calendar fa-2x text-gray-300"></i>
+
+					<%
+					for (Course course : courses) {
+					%>
+
+						
+						<div class="row">
+							<div class="col">
+								<div class="text-dark font-weight-bold"><%=course.getCourseName()%></div>
+							</div>
+						</div>
+
+						<div class="row">
+							<!-- Earnings (Monthly) Card Example -->
+							<div class="col-md-3 mb-4">
+								<div class="card border-left-primary shadow h-100 py-2">
+									<div class="card-body">
+										<div class="row no-gutters align-items-center">
+											<div class="col mr-2">
+												<div
+													class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+													Students Present (Today)</div>
+												<div class="h5 mb-0 font-weight-bold text-gray-800">
+													200</div>
+											</div>
+											<div class="col-auto">
+												<i class="fas fa-calendar fa-2x text-gray-300"></i>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+					<%
+					}
+					%>
+
+					<!-- Content Row -->
+					<div class="row">
 
 						<!-- Earnings (Monthly) Card Example -->
 						<div class="col-xl-3 col-md-6 mb-4">
@@ -123,8 +146,8 @@
 		});
 
 	</script>
-	
-		<script>
+
+	<script>
     document.addEventListener("DOMContentLoaded", function () {
         window.ApexCharts && (new ApexCharts(document.getElementById('chart-mentions'), {
             chart: {
@@ -243,6 +266,5 @@
         })).render();
     });
 </script>
-
 </body>
 </html>

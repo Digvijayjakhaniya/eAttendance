@@ -161,7 +161,6 @@
 													</button></td>
 												<td><button type="button"
 														class="btn btn-danger delStudent"
-														class="btn btn-danger updStudent"
 														data-sid="<%=student.getStudentId()%>">
 														<i class="fas fa-trash"></i>
 													</button></td>

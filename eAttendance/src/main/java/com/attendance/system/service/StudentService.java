@@ -27,5 +27,7 @@ public interface StudentService {
 	ResponseEntity<Student> getStudent(@NonNull Long sid);
 	
 	ResponseEntity<Student> getStudent(SiteUser user);
+	
+	ResponseEntity<Boolean> deleteStudent(Long sid);
 
 }

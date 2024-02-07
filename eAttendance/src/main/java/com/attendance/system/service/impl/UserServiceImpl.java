@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -95,6 +96,16 @@ public class UserServiceImpl implements UserService {
 	public ResponseEntity<Boolean> deleteUser(Long userId) {
 		try {
 			userDao.deleteByUserId(userId);
+			return ResponseEntity.ok(true);
+		} catch (Exception e) {
+			return ResponseEntity.ok(false);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Boolean> deleteUser(@NonNull SiteUser user) {
+		try {
+			userDao.delete(user);
 			return ResponseEntity.ok(true);
 		} catch (Exception e) {
 			return ResponseEntity.ok(false);
