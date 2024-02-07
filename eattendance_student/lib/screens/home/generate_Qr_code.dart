@@ -151,7 +151,17 @@ class _HomePageState extends State<HomePage> {
   }
 void showOverlay() {
  
-  DateTime createdAtTime = DateTime.parse("2022-01-01 $createdAt");
+   DateTime currentDate = DateTime.now();
+  
+  // Combine current date with time from createdAt
+  DateTime createdAtTime = DateTime(
+    currentDate.year,
+    currentDate.month,
+    currentDate.day,
+    int.parse(createdAt!.split(":")[0]),
+    int.parse(createdAt!.split(":")[1]),
+    int.parse(createdAt!.split(":")[2]),
+  );
 
   int durationInMinutes = int.tryParse(duration ?? '0') ?? 0;
 
@@ -161,15 +171,17 @@ void showOverlay() {
 
 
   Overlay.of(context).insert(_overlayEntry);
-  DateTime currentTime = DateTime.now();
   
-  Duration difference = endTime.difference(currentTime);
-
-  int remainingSeconds = difference.inSeconds % 60;
-
+  Duration difference = currentDate.difference(endTime).abs();
+  // print(currentTime);
+  // print(endTime);
+  // print(difference);
+  int remainingSeconds = difference.inSeconds;
+  // print(remainingSeconds);
+  // print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
   
  
-  Future.delayed(Duration(seconds: remainingSeconds-1), () {
+  Future.delayed(Duration(seconds: remainingSeconds), () {
     removeOverlay();
   });
 
