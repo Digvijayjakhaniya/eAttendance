@@ -15,7 +15,6 @@ Map<String, String> createAuthorizationHeaders(String? token,
 const endpoint = "/api/v1";
 
 // HOST URL
-const hosturl =
-    "https://ffde-2409-40c1-10da-ed53-3962-71c0-a3cf-d610.ngrok-free.app";
+const hosturl = "https://eattendance-zfk0.onrender.com";
 
 const String apiUrl = "$hosturl$endpoint";
