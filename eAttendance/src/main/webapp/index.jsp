@@ -1,9 +1,14 @@
+<%@page import="com.attendance.system.model.Attendance"%>
+<%@page import="com.attendance.system.model.Subject"%>
+<%@page import="com.attendance.system.model.Semester"%>
 <%@page import="com.attendance.system.model.Course"%>
+<%@page import="com.attendance.system.model.MappingWrapper"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-List<Course> courses = (List<Course>) request.getAttribute("courses");
+MappingWrapper mappings = (MappingWrapper) request.getAttribute("mappingWrapper");
+List<Attendance> attendanceList = (List<Attendance>) request.getAttribute("attendanceList");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,69 +40,64 @@ List<Course> courses = (List<Course>) request.getAttribute("courses");
 						<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 					</div>
 
-
 					<%
-					for (Course course : courses) {
+					for (Course course : mappings.getCourses()) {
 					%>
 
-						
-						<div class="row">
-							<div class="col">
-								<div class="text-dark font-weight-bold"><%=course.getCourseName()%></div>
-							</div>
+					<div class="row">
+						<div class="col">
+							<div class="text-dark font-weight-bold"><%=course.getCourseName()%></div>
 						</div>
+					</div>
 
-						<div class="row">
-							<!-- Earnings (Monthly) Card Example -->
-							<div class="col-md-3 mb-4">
-								<div class="card border-left-primary shadow h-100 py-2">
-									<div class="card-body">
-										<div class="row no-gutters align-items-center">
-											<div class="col mr-2">
-												<div
-													class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-													Students Present (Today)</div>
-												<div class="h5 mb-0 font-weight-bold text-gray-800">
-													200</div>
+					<%
+					for (Semester sem : mappings.getSemesters()) {
+					%>
+
+					<div><%=sem.getSemesterName()%></div>
+
+					<div class="row">
+						<%
+						for (Subject subject : mappings.getSubjects()) {
+						%>
+						<div class="col-md-3 mb-4">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+												<%=subject.getSubjectName()%></div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">											
+												<%
+												int count = 0;
+												for (Attendance attendance : attendanceList) {
+													if (attendance.getMapId().getCourse().equals(course) && attendance.getMapId().getSemester().equals(sem) && attendance.getMapId().getSubject().equals(subject)) {
+														count++;
+													}
+												}
+												%>
+												<%=count%>
 											</div>
-											<div class="col-auto">
-												<i class="fas fa-calendar fa-2x text-gray-300"></i>
-											</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-calendar fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+						<%
+						}
+						}
+						%>
+					</div>
+
 					<%
 					}
 					%>
 
 					<!-- Content Row -->
-					<div class="row">
-
-						<!-- Earnings (Monthly) Card Example -->
-						<div class="col-xl-3 col-md-6 mb-4">
-							<div class="card border-left-success shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div
-												class="text-xs font-weight-bold text-success text-uppercase mb-1">
-												Weekly Ratio</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">70
-											</div>
-										</div>
-										<div class="col-auto">
-											<i class="fas fa-percentage fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Content Row -->
-
 					<div class="row">
 						<div class="col-lg">
 							<div class="card">

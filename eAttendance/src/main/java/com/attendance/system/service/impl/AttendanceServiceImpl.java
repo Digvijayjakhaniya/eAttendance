@@ -3,6 +3,7 @@ package com.attendance.system.service.impl;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -129,5 +130,10 @@ public class AttendanceServiceImpl implements AttendanceService{
 			System.err.println(e.getMessage());
 			return new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@Override
+	public ResponseEntity<List<Attendance>> getAll() {
+		return ResponseEntity.ok(attendanceDao.findAll());
 	}
 }

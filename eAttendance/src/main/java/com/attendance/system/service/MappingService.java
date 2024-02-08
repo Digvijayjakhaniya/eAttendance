@@ -42,4 +42,6 @@ public interface MappingService {
 	
 	ResponseEntity<List<Semester>> getSemerters(Course course);
 	
+	ResponseEntity<List<Subject>> getSubjects(Semester course);
+	
 }

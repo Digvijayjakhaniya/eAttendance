@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.attendance.system.model.Course;
-import com.attendance.system.model.Semester;
+import com.attendance.system.model.Attendance;
+import com.attendance.system.model.MappingWrapper;
+import com.attendance.system.service.AttendanceService;
 import com.attendance.system.service.HomeService;
 import com.attendance.system.service.MappingService;
 
@@ -17,20 +18,16 @@ public class HomeServiceImpl implements HomeService {
 	@Autowired
 	private MappingService mapService;
 	
-	@SuppressWarnings("null")
+	@Autowired
+	private AttendanceService attendanceService;
+
 	@Override
-	public ResponseEntity<?> getAttendanceData() {
-
-		List<Course> courses= mapService.getCourses().getBody();
-		
-		for(Course course:courses) {
-			List<Semester> semesters=mapService.getSemerters(course).getBody();
-			
-			System.out.print(semesters);
-		}
-//		TODO : return today's data for attendance
-
-		return null;
+	public ResponseEntity<MappingWrapper> getAttendanceData() {
+		return mapService.getAll();
+	}
+	
+	public ResponseEntity<List<Attendance>> attendance(){
+		return attendanceService.getAll();
 	}
 
 }

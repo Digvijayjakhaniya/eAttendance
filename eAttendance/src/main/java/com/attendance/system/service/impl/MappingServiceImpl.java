@@ -135,5 +135,10 @@ public class MappingServiceImpl implements MappingService {
 	public ResponseEntity<List<Semester>> getSemerters(Course course) {
 	return ResponseEntity.ok(mappingDao.findAllSemesters(course));
 	}
+
+	@Override
+	public ResponseEntity<List<Subject>> getSubjects(Semester sem) {
+		return ResponseEntity.ok(mappingDao.findAllSubjects(sem));
+	}
 		
 }

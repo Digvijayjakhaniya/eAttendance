@@ -34,5 +34,8 @@ public interface MappingDao extends JpaRepository<Mapping, Integer> {
 	
 	@Query("SELECT DISTINCT m.semester FROM Mapping m WHERE m.course = :course")
 	List<Semester> findAllSemesters(@Param("course") Course course);
+	
+	@Query("SELECT DISTINCT m.subject FROM Mapping m WHERE m.semester = :sem")
+	List<Subject> findAllSubjects(@Param("sem") Semester sem);
 
 }

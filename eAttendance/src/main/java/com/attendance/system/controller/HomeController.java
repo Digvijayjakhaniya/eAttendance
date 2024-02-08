@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.attendance.system.service.CourseService;
 import com.attendance.system.service.HomeService;
 
 
@@ -14,15 +13,14 @@ import com.attendance.system.service.HomeService;
 public class HomeController {
 	
 	@Autowired
-	private CourseService courses;
-	
-	@Autowired
 	private HomeService homeService;
 
 	@RequestMapping("/home")
 	public ModelAndView home(ModelAndView mv) {
 		mv.setViewName("index");
-		mv.addObject("courses", courses.getAllCources().getBody());
+		
+		mv.addObject("mappingWrapper", homeService.getAttendanceData().getBody());
+		mv.addObject("attendanceList", homeService.attendance().getBody());
 		
 		homeService.getAttendanceData();
 		
