@@ -2,6 +2,7 @@ package com.attendance.system.service.impl;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,13 +14,15 @@ import org.springframework.stereotype.Service;
 
 import com.attendance.system.dao.AttendanceDao;
 import com.attendance.system.model.Attendance;
+import com.attendance.system.model.AttendanceData;
 import com.attendance.system.model.Mapping;
 import com.attendance.system.model.QrRequest;
 import com.attendance.system.model.Student;
+import com.attendance.system.model.Subject;
 import com.attendance.system.service.AttendanceService;
 
 @Service
-public class AttendanceServiceImpl implements AttendanceService{
+public class AttendanceServiceImpl implements AttendanceService {
 
 	@Autowired
 	private AttendanceDao attendanceDao;
@@ -42,7 +45,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 			return new ResponseEntity<String>("Server Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@Override
 	public ResponseEntity<String> updateAttendance(@NonNull Integer aid, Boolean isPresent) {
 		try {
@@ -94,26 +97,27 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 	@Override
-	public ResponseEntity<Boolean> fillAttendance(Integer mid,@NonNull Long sid,QrRequest request) {
+	public ResponseEntity<Boolean> fillAttendance(Integer mid, @NonNull Long sid, QrRequest request) {
 		try {
-			
+
 			LocalTime currentTime = LocalTime.now();
 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-	        LocalTime now = LocalTime.parse(currentTime.format(formatter), formatter);
-	        LocalTime createdAt = LocalTime.parse(request.getCreatedAt(), formatter);
-			
-	        long minutesDifference = Math.abs(now.until(createdAt, java.time.temporal.ChronoUnit.MINUTES));
-	        
-	        if(Long.parseLong(request.getDuration()) < minutesDifference) {
-	        	throw new Exception("Qr Expired, Please Try Again");
-	        }
-	        
-			Mapping mapping=mappingService.getMapping(mid).getBody();
+			LocalTime now = LocalTime.parse(currentTime.format(formatter), formatter);
+			LocalTime createdAt = LocalTime.parse(request.getCreatedAt(), formatter);
+
+			long minutesDifference = Math.abs(now.until(createdAt, java.time.temporal.ChronoUnit.MINUTES));
+
+			if (Long.parseLong(request.getDuration()) < minutesDifference) {
+				throw new Exception("Qr Expired, Please Try Again");
+			}
+
+			Mapping mapping = mappingService.getMapping(mid).getBody();
 			Student student = studentService.getStudent(sid).getBody();
 			System.err.println("filling Attendance");
-			if (request !=null && student !=null && sessionService.isSessionAvailable(request.getCourse(), request.getSubject(), request.getSem(), request.getDividion(), request.getFaculty())) {
+			if (request != null && student != null && sessionService.isSessionAvailable(request.getCourse(),
+					request.getSubject(), request.getSem(), request.getDividion(), request.getFaculty())) {
 				System.err.println("session is active");
 				Attendance attendance = new Attendance();
 				attendance.setDateTime(new Date());
@@ -135,5 +139,24 @@ public class AttendanceServiceImpl implements AttendanceService{
 	@Override
 	public ResponseEntity<List<Attendance>> getAll() {
 		return ResponseEntity.ok(attendanceDao.findAll());
+	}
+
+	@Override
+	public ResponseEntity<AttendanceData> getAttendanceData(Student student) {
+		AttendanceData data = new AttendanceData();
+		
+		data.setTotal(attendanceDao.getTotalAttendance(student));
+		
+		List<Mapping> mappings = attendanceDao.getAllMappings(student);
+		List<Subject> subjects = new ArrayList<>();
+		List<Integer> subjectAtt = new ArrayList<>();
+		for (Mapping map : mappings) {
+			subjects.add(map.getSubject());
+			subjectAtt.add(attendanceDao.getTotalAttendance(map));
+		}
+		data.setStujects(subjects);
+		data.setSubjectAttendance(subjectAtt);
+
+		return ResponseEntity.ok(data);
 	}
 }

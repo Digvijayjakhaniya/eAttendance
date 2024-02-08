@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AttendanceData {
-	private Course course;
-	private List<Semester> semesters;
-	private List<SubjectWrapper> subjectWrapper;
+	private List<Subject> stujects;
+	private List<Integer> subjectAttendance;
+	private Integer total;
 }
