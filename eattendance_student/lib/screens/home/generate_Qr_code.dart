@@ -10,7 +10,7 @@ import '../../repository/session/session_repository.dart';
 import '../../utility/utils.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -41,13 +41,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.paused:
         log("app in paused");
-        ispause=ispause+1;
+        ispause = ispause + 1;
         break;
       case AppLifecycleState.detached:
         log("app in detached");
         break;
       case AppLifecycleState.hidden:
-        // TODO: Handle this case.
         break;
     }
   }
@@ -143,9 +142,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               ],
             ),
           ),
-         _showBuffer
-              ? _overlayEntry as Widget
-              : const SizedBox(), 
+          _showBuffer ? _overlayEntry as Widget : const SizedBox(),
         ],
       ),
     );
@@ -182,40 +179,40 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         message: 'Session is Active Filling Attendance',
       );
 
-      print(ispause);
-      print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-    
-      if (remainingSeconds >30){
+      log(ispause.toString());
+      log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 
-        Future.delayed(Duration(seconds: remainingSeconds-40), ()async {  
-      if (ispause>1){
+      if (remainingSeconds > 30) {
+        Future.delayed(Duration(seconds: remainingSeconds - 40), () async {
+          if (ispause > 1) {
+            showSnackkBar(
+              icon: const Icon(Icons.not_interested),
+              message:
+                  'Could not mark attendance successfully because you have switched the application ',
+            );
+            log(ispause.toString());
+            log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+            log('Attendance is not filled ');
+            ispause = 0;
+          } else {
+            isAttendance =
+                await sessionRepo.fillAttendance(map, getAttendanceData(res));
+            ispause = 0;
+          }
+        });
+      } else {
+        if (ispause > 1) {
           showSnackkBar(
-        icon: const Icon(Icons.not_interested),
-        message: 'Could not mark attendance successfully because you have switched the application ',
-      );
-        print(ispause);
-        print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-          log('Attendance is not filled '); 
-           ispause = 0;
-        }else{
-        isAttendance = await sessionRepo.fillAttendance(map, getAttendanceData(res));
-        ispause = 0;
-      
+            icon: const Icon(Icons.not_interested),
+            message:
+                'Could not mark attendance successfully because you have switched the application',
+          );
+        } else {
+          isAttendance =
+              await sessionRepo.fillAttendance(map, getAttendanceData(res));
+          ispause = 0;
+        }
       }
-    });
-      }else{
-        if (ispause>1){
-           showSnackkBar(
-        icon: const Icon(Icons.not_interested),
-        message: 'Could not mark attendance successfully because you have switched the application',
-      );
-        }else{
-        isAttendance = await sessionRepo.fillAttendance(map, getAttendanceData(res));
-        ispause = 0;
-        
-      }
-      }
-     
     } else {
       showSnackkBar(
         icon: const Icon(Icons.not_interested),
@@ -239,5 +236,4 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       createdAt: uri.queryParameters['createdAt']!,
     );
   }
-
 }

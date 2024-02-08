@@ -154,7 +154,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 			subjects.add(map.getSubject());
 			subjectAtt.add(attendanceDao.getTotalAttendance(map));
 		}
-		data.setStujects(subjects);
+		data.setSubjects(subjects);
 		data.setSubjectAttendance(subjectAtt);
 
 		return ResponseEntity.ok(data);

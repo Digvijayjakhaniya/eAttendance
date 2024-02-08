@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:eattendance_student/models/attendance_data.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
+import '../../models/attendance_data.dart';
 import '../../models/mapping_model.dart';
 import '../../repository/session/session_repository.dart';
 import '../../utility/utils.dart';
@@ -71,18 +71,22 @@ class _HomeState extends State<Home> {
                         ),
                       );
 
-                   
                       Uri uri = Uri.parse(res);
 
-                        Map<String, String> queryParameters =uri.queryParameters;
-                        log(queryParameters.toString());
-                      AttendanceData data = AttendanceData(course: queryParameters['course']!.toString(),subject: queryParameters['subject']!.toString(),sem: queryParameters['sem']!.toString(),dividion: queryParameters['division']!.toString(),faculty: queryParameters['fid']!.toString(),duration: queryParameters['duration']!.toString(),createdAt: queryParameters['createdAt']!.toString());
+                      Map<String, String> queryParameters = uri.queryParameters;
+                      log(queryParameters.toString());
+                      AttendanceData data = AttendanceData(
+                          course: queryParameters['course']!.toString(),
+                          subject: queryParameters['subject']!.toString(),
+                          sem: queryParameters['sem']!.toString(),
+                          dividion: queryParameters['division']!.toString(),
+                          faculty: queryParameters['fid']!.toString(),
+                          duration: queryParameters['duration']!.toString(),
+                          createdAt: queryParameters['createdAt']!.toString());
 
-                        log(data.toString());
+                      log(data.toString());
                       // Your action when the button is pressed
                       Mapping? map = await sessinRepo.isSessionOpen();
-
-                    
 
                       if (map != null) {
                         showSnackkBar(

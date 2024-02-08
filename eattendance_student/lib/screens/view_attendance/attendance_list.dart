@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../repository/attendance/attendance_list_repository.dart';
+import '../../models/attendance_model.dart';
 
 class AttendanceList extends StatefulWidget {
-  const AttendanceList({Key? key}) : super(key: key);
+  const AttendanceList({super.key});
 
   @override
-  _AttendanceListState createState() => _AttendanceListState();
+  State<AttendanceList> createState() => _AttendanceListState();
 }
 
 class _AttendanceListState extends State<AttendanceList>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  double totalPercentage = 40.0;
+  double totalPercentage = 0.0;
+  AttendanceListRepository attendanceListRepo =
+      Get.put(AttendanceListRepository());
+
+  AttendanceListData? data = AttendanceListData(
+      subjects: List.empty(), subjectAttendance: List.empty(), total: 0);
 
   @override
   void initState() {
@@ -20,6 +29,15 @@ class _AttendanceListState extends State<AttendanceList>
       duration: const Duration(seconds: 1),
     );
     _animationController.forward();
+    totalPercentage = 0.0;
+    _initializeData();
+  }
+
+  void _initializeData() async {
+    data = await attendanceListRepo.getAttendanceList();
+    setState(() {
+      totalPercentage = data!.total;
+    });
   }
 
   @override
@@ -35,11 +53,9 @@ class _AttendanceListState extends State<AttendanceList>
       children: <Widget>[
         Column(
           children: [
-            listViewItem(30, 'Python'),
-            listViewItem(50, 'Web Services'),
-            listViewItem(60, 'NOSQL'),
-            listViewItem(70, 'DAA'),
-            listViewItem(80, 'CCV'),
+            for (int i = 0; i < data!.subjects.length; i++)
+              listViewItem(
+                  data!.subjectAttendance[i], data!.subjects[i].subjectName),
           ],
         ),
         Container(

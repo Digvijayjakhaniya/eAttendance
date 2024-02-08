@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 
-class processindicator extends StatelessWidget {
-  const processindicator({super.key});
+class ProcessIndicator extends StatelessWidget {
+  const ProcessIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Center(
-          child:Column(
-            children: [
-               CircularProgressIndicator(),
-               Text('Please wait...')
-            ],
-          ),
+    return const Scaffold(
+      body: Center(
+        child: Column(
+          children: [CircularProgressIndicator(), Text('Please wait...')],
         ),
       ),
     );
