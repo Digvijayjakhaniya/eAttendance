@@ -1,36 +1,61 @@
-import '../../models/attendance_data.dart';
-import '../../models/mapping_model.dart';
-import '../../repository/session/session_repository.dart';
-import '../../utility/utils.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
+import '../../models/attendance_data.dart';
+import '../../models/mapping_model.dart';
+import '../../repository/session/session_repository.dart';
+import '../../utility/utils.dart';
+
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  SessionRepository sessinRepo = Get.put(SessionRepository());
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  final SessionRepository sessionRepo = Get.put(SessionRepository());
   bool isAttendance = false;
   bool isButtonDisable = false;
-
+  int ispause = 0;
   late bool _showBuffer;
   String result = '';
   Map<String, String> queryParameters = {};
   late OverlayEntry _overlayEntry;
   String? duration;
   String? createdAt;
-  DateTime now1 = DateTime.now();
 
-  bool overlayShown = false; 
+  bool overlayShown = false;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        log("app in resumed");
+        break;
+      case AppLifecycleState.inactive:
+        log("app in inactive");
+        break;
+      case AppLifecycleState.paused:
+        log("app in paused");
+        ispause=ispause+1;
+        break;
+      case AppLifecycleState.detached:
+        log("app in detached");
+        break;
+      case AppLifecycleState.hidden:
+        // TODO: Handle this case.
+        break;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _showBuffer = false;
     _overlayEntry = createOverlayEntry();
   }
@@ -60,13 +85,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void removeOverlay() {
+    WidgetsBinding.instance.removeObserver(this);
     setState(() {
       _overlayEntry.remove();
       overlayShown = false;
       if (isAttendance) {
         showSnackkBar(
-            icon: const Icon(Icons.done),
-            message: 'Attendance Filled SuccessFully');
+          icon: const Icon(Icons.done),
+          message: 'Attendance Filled Successfully',
+        );
       }
     });
   }
@@ -99,41 +126,15 @@ class _HomePageState extends State<HomePage> {
                         createdAt = queryParameters['createdAt'];
                       }
                     });
+
                     if (!overlayShown &&
                         duration != null &&
                         duration!.isNotEmpty) {
-                      Uri uri = Uri.parse(res);
-
-                      Map<String, String> queryParameters = uri.queryParameters;
-                      AttendanceData data = AttendanceData(
-                          course: queryParameters['course']!.toString(),
-                          subject: queryParameters['subject']!.toString(),
-                          sem: queryParameters['sem']!.toString(),
-                          dividion: queryParameters['division']!.toString(),
-                          faculty: queryParameters['fid']!.toString(),
-                          duration: queryParameters['duration']!.toString(),
-                          createdAt: queryParameters['createdAt']!.toString());
-
-
-                      Mapping? map = await sessinRepo.isSessionOpen();
-
-                      if (map != null) {
-                        showSnackkBar(
-                            icon: const Icon(Icons.done),
-                            message: 'Session is Active Filling Attendance');
-                        isAttendance =
-                            await sessinRepo.fillAttendance(map, data);
-                      } else {
-                        showSnackkBar(
-                          icon: const Icon(Icons.not_interested),
-                          message: 'Opps! You Are Out Of Time',
-                        );
-                      }
-                      showOverlay();
+                      showOverlay(res);
                     } else {
                       showSnackkBar(
                         icon: const Icon(Icons.not_interested),
-                        message: 'Invalid Qr Code',
+                        message: 'Invalid QR Code',
                       );
                     }
                   },
@@ -142,51 +143,101 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          _showBuffer
+         _showBuffer
               ? _overlayEntry as Widget
               : const SizedBox(), 
         ],
       ),
     );
   }
-void showOverlay() {
- 
-   DateTime currentDate = DateTime.now();
-  
-  // Combine current date with time from createdAt
-  DateTime createdAtTime = DateTime(
-    currentDate.year,
-    currentDate.month,
-    currentDate.day,
-    int.parse(createdAt!.split(":")[0]),
-    int.parse(createdAt!.split(":")[1]),
-    int.parse(createdAt!.split(":")[2]),
-  );
 
-  int durationInMinutes = int.tryParse(duration ?? '0') ?? 0;
+  void showOverlay(String res) async {
+    DateTime currentDate = DateTime.now();
+    DateTime createdAtTime = DateTime(
+      currentDate.year,
+      currentDate.month,
+      currentDate.day,
+      int.parse(createdAt!.split(":")[0]),
+      int.parse(createdAt!.split(":")[1]),
+      int.parse(createdAt!.split(":")[2]),
+    );
 
-  
-  DateTime endTime = createdAtTime.add(Duration(minutes: durationInMinutes));
+    int durationInMinutes = int.tryParse(duration ?? '0') ?? 0;
+    DateTime endTime = createdAtTime.add(Duration(minutes: durationInMinutes));
 
+    Overlay.of(context).insert(_overlayEntry);
 
+    Duration difference = currentDate.difference(endTime).abs();
+    int remainingSeconds = difference.inSeconds;
 
-  Overlay.of(context).insert(_overlayEntry);
-  
-  Duration difference = currentDate.difference(endTime).abs();
-  // print(currentTime);
-  // print(endTime);
-  // print(difference);
-  int remainingSeconds = difference.inSeconds;
-  // print(remainingSeconds);
-  // print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-  
- 
-  Future.delayed(Duration(seconds: remainingSeconds), () {
-    removeOverlay();
-  });
+    Future.delayed(Duration(seconds: remainingSeconds), () {
+      removeOverlay();
+    });
 
-  overlayShown = true;
-}
+    Mapping? map = await sessionRepo.isSessionOpen();
 
+    if (map != null) {
+      showSnackkBar(
+        icon: const Icon(Icons.done),
+        message: 'Session is Active Filling Attendance',
+      );
+
+      print(ispause);
+      print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+    
+      if (remainingSeconds >30){
+
+        Future.delayed(Duration(seconds: remainingSeconds-40), ()async {  
+      if (ispause>1){
+          showSnackkBar(
+        icon: const Icon(Icons.not_interested),
+        message: 'Could not mark attendance successfully because you have switched the application ',
+      );
+        print(ispause);
+        print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+          log('Attendance is not filled '); 
+           ispause = 0;
+        }else{
+        isAttendance = await sessionRepo.fillAttendance(map, getAttendanceData(res));
+        ispause = 0;
+      
+      }
+    });
+      }else{
+        if (ispause>1){
+           showSnackkBar(
+        icon: const Icon(Icons.not_interested),
+        message: 'Could not mark attendance successfully because you have switched the application',
+      );
+        }else{
+        isAttendance = await sessionRepo.fillAttendance(map, getAttendanceData(res));
+        ispause = 0;
+        
+      }
+      }
+     
+    } else {
+      showSnackkBar(
+        icon: const Icon(Icons.not_interested),
+        message: 'Oops! You Are Out Of Time',
+      );
+    }
+
+    log(queryParameters.toString());
+    overlayShown = true;
+  }
+
+  AttendanceData getAttendanceData(String res) {
+    Uri uri = Uri.parse(res);
+    return AttendanceData(
+      course: uri.queryParameters['course']!,
+      subject: uri.queryParameters['subject']!,
+      sem: uri.queryParameters['sem']!,
+      dividion: uri.queryParameters['division']!,
+      faculty: uri.queryParameters['fid']!,
+      duration: uri.queryParameters['duration']!,
+      createdAt: uri.queryParameters['createdAt']!,
+    );
+  }
 
 }
