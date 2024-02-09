@@ -10,7 +10,7 @@ import '../../repository/session/session_repository.dart';
 import '../../utility/utils.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late OverlayEntry _overlayEntry;
   String? duration;
   String? createdAt;
+  String overlayMessage = "Please wait while we mark your attendance.";
 
   bool overlayShown = false;
   bool isAppActive = true; // Flag to track if the app is active
@@ -68,14 +69,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           color: Colors.white,
-          child: const Center(
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircularProgressIndicator(),
+                const CircularProgressIndicator(),
                 Text(
-                  'Please wait while we mark your attendance.',
-                  style: TextStyle(fontSize: 14),
+                  overlayMessage,
+                  style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),
@@ -185,6 +186,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     Mapping? map = await sessionRepo.isSessionOpen();
 
+    log(map.toString());
+
     if (map != null && isAppActive) {
       showSnackkBar(
         icon: const Icon(Icons.done),
@@ -206,6 +209,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         message:
             'Could not mark attendance because you have switched the application',
       );
+      overlayMessage = 'Please wait till session expires.';
     } else {
       showSnackkBar(
         icon: const Icon(Icons.not_interested),

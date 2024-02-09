@@ -28,7 +28,7 @@ class AboutUs extends StatelessWidget {
               ),
               SizedBox(height: 30),
               Text(
-                "Welcome to our app!",
+                "Welcome to eAttendance!",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 24,
@@ -64,7 +64,7 @@ class AboutUs extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                "MSCIT Students - Semester 1",
+                "Growth Guards",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
