@@ -31,6 +31,20 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool overlayShown = false;
 
   @override
+  void initState() {
+    super.initState();
+    _showBuffer = false;
+    _overlayEntry = createOverlayEntry();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
@@ -49,14 +63,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case AppLifecycleState.hidden:
         break;
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    _showBuffer = false;
-    _overlayEntry = createOverlayEntry();
   }
 
   OverlayEntry createOverlayEntry() {
