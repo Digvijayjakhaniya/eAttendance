@@ -160,7 +160,7 @@
 														<i class="fas fa-edit"></i>
 													</button></td>
 												<td><button type="button"
-														class="btn btn-danger delStudent"
+														class="btn btn-danger delStudent" data-csrf="${_csrf.token}"
 														data-sid="<%=student.getStudentId()%>">
 														<i class="fas fa-trash"></i>
 													</button></td>

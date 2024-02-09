@@ -91,11 +91,13 @@
 														data-target="#editBatch">
 														<i class="fas fa-edit"></i>
 													</button></td>
-												<td><button type="button"
-														class="btn btn-danger delBatch"
+												<td>
+												<button type="button"
+														class="btn btn-danger delBatch" data-csrf="${_csrf.token}"
 														data-bid="<%=batch.getId()%>">
 														<i class="fas fa-trash"></i>
-													</button></td>
+													</button>
+												</td>
 											</tr>
 											<%
 											}

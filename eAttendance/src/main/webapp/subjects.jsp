@@ -92,7 +92,7 @@
 														<i class="fas fa-edit"></i>
 													</button></td>
 												<td><button type="button"
-														class="btn btn-danger delSubject"
+														class="btn btn-danger delSubject" data-csrf="${_csrf.token}"
 														data-sid="<%=subject.getSubjectId()%>">
 														<i class="fas fa-trash"></i>
 													</button></td>
