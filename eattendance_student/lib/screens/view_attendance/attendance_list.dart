@@ -35,8 +35,12 @@ class _AttendanceListState extends State<AttendanceList>
 
   void _initializeData() async {
     data = await attendanceListRepo.getAttendanceList();
+    double totalAttendance = 0.0;
+    for (double attendance in data!.subjectAttendance) {
+      totalAttendance += attendance;
+    }
     setState(() {
-      totalPercentage = data!.total;
+      totalPercentage = totalAttendance;
     });
   }
 
@@ -63,7 +67,7 @@ class _AttendanceListState extends State<AttendanceList>
           padding: const EdgeInsets.all(10),
           color: totalPercentageColor(),
           child: Text(
-            'Total Percentage: ${totalPercentage.toStringAsFixed(2)}%',
+            'Total Attendance: ${totalPercentage.toStringAsFixed(2)}',
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
@@ -131,7 +135,7 @@ class _AttendanceListState extends State<AttendanceList>
                     padding: const EdgeInsets.all(5),
                     child: Center(
                       child: Text(
-                        '${(subjectPercentage * _animationController.value).toStringAsFixed(0)}%',
+                        '${(subjectPercentage * _animationController.value).toStringAsFixed(0)}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15.0,
