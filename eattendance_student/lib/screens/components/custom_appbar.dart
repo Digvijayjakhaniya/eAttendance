@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar {
-  PreferredSizeWidget customAppBar({title = 'eAttend'}) {
+  PreferredSizeWidget customAppBar({title = 'eAttendance'}) {
     return AppBar(
       title: Text(
         title,
