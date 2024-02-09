@@ -10,7 +10,7 @@ import '../../repository/session/session_repository.dart';
 import '../../utility/utils.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,9 +18,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final SessionRepository sessionRepo = Get.put(SessionRepository());
-  bool isAttendance = false;
-  bool isButtonDisable = false;
-  int ispause = 0;
   late bool _showBuffer;
   String result = '';
   Map<String, String> queryParameters = {};
@@ -29,24 +26,23 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   String? createdAt;
 
   bool overlayShown = false;
+  bool isAppActive = true; // Flag to track if the app is active
+  bool isAttendance = false; // Flag to track if attendance is filled
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
-        log("app in resumed");
-        break;
-      case AppLifecycleState.inactive:
-        log("app in inactive");
+        setState(() {
+          isAppActive = true; // App is now active
+        });
         break;
       case AppLifecycleState.paused:
-        log("app in paused");
-        ispause = ispause + 1;
+        setState(() {
+          isAppActive = false; // App is now inactive
+        });
         break;
-      case AppLifecycleState.detached:
-        log("app in detached");
-        break;
-      case AppLifecycleState.hidden:
+      default:
         break;
     }
   }
@@ -57,6 +53,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _showBuffer = false;
     _overlayEntry = createOverlayEntry();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   OverlayEntry createOverlayEntry() {
@@ -84,7 +86,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void removeOverlay() {
-    WidgetsBinding.instance.removeObserver(this);
     setState(() {
       _overlayEntry.remove();
       overlayShown = false;
@@ -92,6 +93,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         showSnackkBar(
           icon: const Icon(Icons.done),
           message: 'Attendance Filled Successfully',
+        );
+      } else if (!isAttendance) {
+        showSnackkBar(
+          icon: const Icon(Icons.not_interested),
+          message:
+              'Could not mark attendance because you have switched the application Or Out Of Time',
+        );
+      } else {
+        showSnackkBar(
+          icon: const Icon(Icons.not_interested),
+          message: 'Oops! You Are Out Of Time',
         );
       }
     });
@@ -173,46 +185,27 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     Mapping? map = await sessionRepo.isSessionOpen();
 
-    if (map != null) {
+    if (map != null && isAppActive) {
       showSnackkBar(
         icon: const Icon(Icons.done),
         message: 'Session is Active Filling Attendance',
       );
 
-      log(ispause.toString());
-      log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-
       if (remainingSeconds > 30) {
         Future.delayed(Duration(seconds: remainingSeconds - 40), () async {
-          if (ispause > 1) {
-            showSnackkBar(
-              icon: const Icon(Icons.not_interested),
-              message:
-                  'Could not mark attendance successfully because you have switched the application ',
-            );
-            log(ispause.toString());
-            log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-            log('Attendance is not filled ');
-            ispause = 0;
-          } else {
-            isAttendance =
-                await sessionRepo.fillAttendance(map, getAttendanceData(res));
-            ispause = 0;
-          }
-        });
-      } else {
-        if (ispause > 1) {
-          showSnackkBar(
-            icon: const Icon(Icons.not_interested),
-            message:
-                'Could not mark attendance successfully because you have switched the application',
-          );
-        } else {
           isAttendance =
               await sessionRepo.fillAttendance(map, getAttendanceData(res));
-          ispause = 0;
-        }
+        });
+      } else {
+        isAttendance =
+            await sessionRepo.fillAttendance(map, getAttendanceData(res));
       }
+    } else if (!isAppActive) {
+      showSnackkBar(
+        icon: const Icon(Icons.not_interested),
+        message:
+            'Could not mark attendance because you have switched the application',
+      );
     } else {
       showSnackkBar(
         icon: const Icon(Icons.not_interested),
