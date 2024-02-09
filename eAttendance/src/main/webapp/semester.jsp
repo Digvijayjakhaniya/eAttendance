@@ -90,7 +90,7 @@
 														data-target="#editSem">
 														<i class="fas fa-edit"></i>
 													</button></td>
-												<td><button type="button" class="btn btn-danger delSem"
+												<td><button type="button" class="btn btn-danger delSem" data-csrf="${_csrf.token}"
 														data-sid="<%=semester.getSemesterId()%>">
 														<i class="fas fa-trash"></i>
 													</button></td>

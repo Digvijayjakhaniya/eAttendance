@@ -166,7 +166,7 @@
 												-->
 
 												<td><button type="button"
-														class="btn btn-danger delMapping"
+														class="btn btn-danger delMapping" data-csrf="${_csrf.token}"
 														data-mid="<%=mapping.getMapId()%>">
 														<i class="fas fa-trash"></i>
 													</button></td>

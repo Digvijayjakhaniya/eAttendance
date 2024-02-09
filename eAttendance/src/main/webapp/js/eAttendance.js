@@ -1,11 +1,11 @@
 /* Faculty Operations */
 
-const successRes = function(data){
-	return "<p class='text-success'>"+data+"</p>";
+const successRes = function(data) {
+	return "<p class='text-success'>" + data + "</p>";
 }
 
-const errorRes = function(data){
-	return "<p class='text-danger'>"+data+"</p>";
+const errorRes = function(data) {
+	return "<p class='text-danger'>" + data + "</p>";
 }
 
 //addFaculty
@@ -65,6 +65,7 @@ $("#editFacultyForm").on("submit", function(e) {
 // Delete Faculty
 $(document).on("click", ".delFac", function() {
 	let fid = $(this).data("fid");
+	let csrf = $(this).data("csrf");
 	let element = this;
 	$.confirm({
 		title: '<p><small>Do yo Really Want To Delete?</small>',
@@ -73,6 +74,7 @@ $(document).on("click", ".delFac", function() {
 				$.ajax({
 					url: "faculty/deleteFacultyById/" + fid,
 					type: "DELETE",
+					data: { _csrf: csrf },
 					success: function(data) {
 						if (data == 1) {
 							$.alert('Faculty Deleted SuccessFully');
@@ -91,7 +93,6 @@ $(document).on("click", ".delFac", function() {
 });
 
 /* Course Operations */
-
 //add Course
 $("#addCourse").on("submit", function(e) {
 	e.preventDefault();
@@ -148,6 +149,7 @@ $("#editCourseForm").on("submit", function(e) {
 //Delete Course
 $(document).on("click", ".delCourse", function() {
 	let cid = $(this).data("cid");
+	let csrf = $(this).data("csrf");
 	let element = this;
 	$.confirm({
 		title: '<p><small>Do yo Really Want To Delete?</small>',
@@ -156,6 +158,7 @@ $(document).on("click", ".delCourse", function() {
 				$.ajax({
 					url: "course/delete/" + cid,
 					type: "DELETE",
+					data: { _csrf: csrf },
 					success: function(data) {
 						if (data == 1) {
 							$.alert('Course Deleted SuccessFully');
@@ -175,7 +178,6 @@ $(document).on("click", ".delCourse", function() {
 
 
 /* Subject Operations */
-
 //add Subject
 $("#addSubject").on("submit", function(e) {
 	e.preventDefault();
@@ -232,6 +234,7 @@ $("#editSubjectForm").on("submit", function(e) {
 //Delete Subject
 $(document).on("click", ".delSubject", function() {
 	let sid = $(this).data("sid");
+	let csrf = $(this).data("csrf");
 	let element = this;
 	$.confirm({
 		title: '<p><small>Do yo Really Want To Delete?</small>',
@@ -240,6 +243,7 @@ $(document).on("click", ".delSubject", function() {
 				$.ajax({
 					url: "subjects/delete/" + sid,
 					type: "DELETE",
+					data: { _csrf: csrf },
 					success: function(data) {
 						if (data == 1) {
 							$.alert('Subject Deleted SuccessFully');
@@ -259,7 +263,6 @@ $(document).on("click", ".delSubject", function() {
 
 
 /* Semester Operations */
-
 //add Semester
 $("#addSemester").on("submit", function(e) {
 	e.preventDefault();
@@ -316,6 +319,7 @@ $("#editSemForm").on("submit", function(e) {
 //Delete Semester
 $(document).on("click", ".delSem", function() {
 	let sid = $(this).data("sid");
+	let csrf = $(this).data("csrf");
 	let element = this;
 	$.confirm({
 		title: '<p><small>Do yo Really Want To Delete?</small>',
@@ -324,6 +328,7 @@ $(document).on("click", ".delSem", function() {
 				$.ajax({
 					url: "semester/delete/" + sid,
 					type: "DELETE",
+					data: { _csrf: csrf },
 					success: function(data) {
 						if (data == 1) {
 							$.alert('Semester Deleted SuccessFully');
@@ -342,7 +347,6 @@ $(document).on("click", ".delSem", function() {
 });
 
 /* Mapping Operations */
-
 //add Mapping
 $("#addMapping").on("submit", function(e) {
 	e.preventDefault();
@@ -366,6 +370,7 @@ $("#addMapping").on("submit", function(e) {
 //Delete Mapping
 $(document).on("click", ".delMapping", function() {
 	let mid = $(this).data("mid");
+	let csrf = $(this).data("csrf");
 	let element = this;
 	$.confirm({
 		title: '<p><small>Do yo Really Want To Delete?</small>',
@@ -374,6 +379,7 @@ $(document).on("click", ".delMapping", function() {
 				$.ajax({
 					url: "mapping/delete/" + mid,
 					type: "DELETE",
+					data: { _csrf: csrf },
 					success: function(data) {
 						if (data == 1) {
 							$.alert('Mapping Deleted SuccessFully');
@@ -393,19 +399,18 @@ $(document).on("click", ".delMapping", function() {
 
 /* Batch Operations */
 //add Batch
-
-$("#addBatch").on("submit",function(e){
+$("#addBatch").on("submit", function(e) {
 	e.preventDefault();
 	$.ajax({
-		url:"batch/add",
-		type:"POST",
-		data:$(this).serialize(),
-		statusCode:{
-			200:function(){
+		url: "batch/add",
+		type: "POST",
+		data: $(this).serialize(),
+		statusCode: {
+			200: function() {
 				$("#addBatch").trigger("reset");
 			}
 		},
-		success:function(data){
+		success: function(data) {
 			$("#batchResponce").hide();
 			$("#batchResponce").html(successRes(data));
 			$("#batchResponce").fadeIn("slow");
@@ -433,15 +438,14 @@ $(document).on("click", ".updBatch", function() {
 });
 
 // Update Batch
-
-$("#editBatchForm").on("submit",function(e){
-	let bid=$("#hdnBid").val();
+$("#editBatchForm").on("submit", function(e) {
+	let bid = $("#hdnBid").val();
 	e.preventDefault();
 	$.ajax({
-		url:"batch/update/"+bid,
-		type:"PUT",
-		data:$(this).serialize(),
-		success:function(data){
+		url: "batch/update/" + bid,
+		type: "PUT",
+		data: $(this).serialize(),
+		success: function(data) {
 			$("#updBatchRes").hide();
 			$("#updBatchRes").html(successRes(data));
 			$("#updBatchRes").fadeIn("slow");
@@ -452,6 +456,7 @@ $("#editBatchForm").on("submit",function(e){
 // Delete Batch
 $(document).on("click", ".delBatch", function() {
 	let bid = $(this).data("bid");
+	let csrf = $(this).data("csrf");
 	let element = this;
 	$.confirm({
 		title: '<p><small>Do yo Really Want To Delete?</small>',
@@ -460,6 +465,7 @@ $(document).on("click", ".delBatch", function() {
 				$.ajax({
 					url: "batch/delete/" + bid,
 					type: "DELETE",
+					data: { _csrf: csrf },
 					success: function(data) {
 						if (data == 1) {
 							$.alert('Batch Deleted SuccessFully');
@@ -479,18 +485,18 @@ $(document).on("click", ".delBatch", function() {
 
 /* Student Operations */
 //addStudent
-$("#addStudent").on("submit",function(e){
+$("#addStudent").on("submit", function(e) {
 	e.preventDefault();
 	$.ajax({
-		url:"student/add",
-		type:"POST",
-		data:$(this).serialize(),
-		statusCode:{
-			200:function(){
+		url: "student/add",
+		type: "POST",
+		data: $(this).serialize(),
+		statusCode: {
+			200: function() {
 				$("#addStudent").trigger("reset");
 			}
 		},
-		success:function(data){
+		success: function(data) {
 			$("#studentResponse").hide();
 			$("#studentResponse").html(successRes(data));
 			$("#studentResponse").fadeIn("slow");
@@ -511,8 +517,8 @@ $(document).on("click", ".updStudent", function() {
 			$("#updStuName").val(data.user.userName);
 			$("#updStuEmail").val(data.user.email);
 			$("#updStuDivision").val(data.studentDivision);
-			$('#updStuBatch  option[value="'+data.studentBatch.id+'"]').attr("selected",true);
-			$('#updStuCourse  option[value="'+data.studentCourse.courseId+'"]').attr("selected",true);
+			$('#updStuBatch  option[value="' + data.studentBatch.id + '"]').attr("selected", true);
+			$('#updStuCourse  option[value="' + data.studentCourse.courseId + '"]').attr("selected", true);
 		}
 	});
 });
@@ -530,7 +536,7 @@ $("#editStudentForm").on("submit", function(e) {
 			$("#updStuRes").html(successRes(data));
 			$("#updStuRes").fadeIn("slow");
 		},
-		error:function(data){
+		error: function(data) {
 			// console.log(data);
 			$("#updStuRes").html(errorRes(data));
 		}
@@ -540,6 +546,7 @@ $("#editStudentForm").on("submit", function(e) {
 // Delete Student
 $(document).on("click", ".delStudent", function() {
 	let sid = $(this).data("sid");
+	let csrf = $(this).data("csrf");
 	let element = this;
 	$.confirm({
 		title: '<p><small>Do yo Really Want To Delete?</small>',
@@ -548,6 +555,7 @@ $(document).on("click", ".delStudent", function() {
 				$.ajax({
 					url: "student/delete/" + sid,
 					type: "DELETE",
+					data: { _csrf: csrf },
 					success: function(data) {
 						if (data == 1) {
 							$.alert('student Deleted SuccessFully');

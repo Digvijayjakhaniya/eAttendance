@@ -110,7 +110,7 @@
 														data-target="#editFaculty">
 														<i class="fas fa-edit"></i>
 													</button></td>
-												<td><button type="button" class="btn btn-danger delFac"
+												<td><button type="button" class="btn btn-danger delFac" data-csrf="${_csrf.token}"
 														data-fid="<%=faculty.getUserId()%>">
 														<i class="fas fa-trash"></i>
 													</button></td>

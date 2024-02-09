@@ -76,7 +76,7 @@ public class StudentController {
 		Student student = Student.builder().studentId(updStuId).studentDivision(updStuDivision).studentCourse(updStuCourse)
 				.studentBatch(updStuBatch).user(user).build();
 		studentService.updateStudent(student);
-		return ResponseEntity.ok("Faculty Updated Successfully");
+		return ResponseEntity.ok("Student Updated Successfully");
 
 	}
 	
